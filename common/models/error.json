@@ -1,0 +1,27 @@
+{
+  "name": "Error",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "errorCode": {
+      "type": "string",
+      "description": "Error Code"
+    },
+    "message": {
+      "type": "string",
+      "description": "default loopback error object attribute"
+    },
+    "statusCode": {
+      "type": "string",
+      "description": "default loopback error object attribute",
+      "format": "integer"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

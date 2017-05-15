@@ -1,0 +1,93 @@
+{
+  "name": "Content",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "id": {
+      "type": "number",
+      "description": "unique Id of the Content"
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the Content shown on the UI"
+    },
+    "name": {
+      "type": "string",
+      "description": "name of the Content"
+    },
+    "createdBy": {
+      "type": "string",
+      "description": "admin user who created the Content"
+    },
+    "createdDate": {
+      "type": "string",
+      "description": "created date of the Content",
+      "format": "date-time"
+    },
+    "updatedDate": {
+      "type": "string",
+      "description": "updated date/published date of the Content",
+      "format": "date-time"
+    },
+    "updatedBy": {
+      "type": "string",
+      "description": "admin user who updated the Content"
+    },
+    "startDate": {
+      "type": "string",
+      "description": "start date of content validity",
+      "format": "date-time"
+    },
+    "endDate": {
+      "type": "string",
+      "description": "end date of content validity",
+      "format": "date-time"
+    },
+    "feature": {
+      "type": "string",
+      "description": "feature to which the content belongs to"
+    },
+    "format": {
+      "type": "string",
+      "description": "format of the Content [IMAGE, VIDEO, TEXT,PDF]",
+      "enum": [
+        "IMAGE",
+        "VIDEO",
+        "TEXT",
+        "PDF"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "description": "version of the Content"
+    },
+    "majorVersionFlag": {
+      "type": "boolean",
+      "description": "specifies if the version being created is a major"
+    },
+    "assetUrl": {
+      "type": "string",
+      "description": "URL of Content. For Image/PDF it could be File system path, For Video it could be File Path or WWW URL"
+    },
+    "text": {
+      "type": "string",
+      "description": "text of the Content"
+    },
+    "status": {
+      "type": "string",
+      "description": "specifies the approval status of the content",
+      "enum": [
+        "CREATED",
+        "APPROVED",
+        "REJECTED"
+      ]
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
