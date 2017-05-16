@@ -1,4 +1,42 @@
-# content-service - Content as a Service Application
+# content-service (Content as a Service Application)
+
+**Content as a Service** is a new type of CMS, different than traditional CMS like WordPress which provides one stop solution for creating websites, managing and publishing its content.
+
+Content as a Service (Caas) focuses purely on content management without worrying about the type of output (which can be anything like mobile apps, websites, other channels or devices). CaaS advises to use CMS only for managing content instead of handling its presentation.
+
+### Characteristics of CaaS
+* Content could be retrieved using simple REST API.
+* Content would be retrieved in well defined structure such as JSON.
+* Highly customizable Content structures could be defined.
+* Availability of Web interface to manage Content.
+* Webhooks are available to respond to any Content updates.
+* Content would be hosted in the cloud.
+
+### CaaS Vs Traditional CMS
+* Structured Content
+* Decoupled Approach
+* Seperation of Content and Presentation
+* Content Available on Cloud
+
+### Usages of Caas
+* Content as backend for Mobile Apps
+* Content published for multi-channels
+* Rich WebApps using latest MV* Frameworks
+* Integration with existing applications/services
+* Customized UX
+* Programatically Content Creation through APIs
+
+### Limitations of CaaS
+* Not apt for personal blogs.
+* Huge effort in case Content is for only one channel
+* Complex in case Content is only for one channel. Much cheaper and simple solutions are available for this case.
+
+### Adoption of CaaS
+
+##### Developer
+
+##### Business
+
 
 # Contributing to abhiyaantrikee/content-service
 
