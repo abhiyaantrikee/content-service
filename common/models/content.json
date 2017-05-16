@@ -8,51 +8,36 @@
   "properties": {
     "id": {
       "type": "number",
-      "description": "unique Id of the Content"
+      "description": "Unique Id of the Content (equivalent to PRIMARY KEY)\n",
+      "format": "int64"
     },
     "title": {
       "type": "string",
-      "description": "Title of the Content shown on the UI"
+      "description": "Title of the Content shown on the UI\n"
     },
     "name": {
       "type": "string",
-      "description": "name of the Content"
-    },
-    "createdBy": {
-      "type": "string",
-      "description": "admin user who created the Content"
-    },
-    "createdDate": {
-      "type": "string",
-      "description": "created date of the Content",
-      "format": "date-time"
-    },
-    "updatedDate": {
-      "type": "string",
-      "description": "updated date/published date of the Content",
-      "format": "date-time"
-    },
-    "updatedBy": {
-      "type": "string",
-      "description": "admin user who updated the Content"
+      "description": "Name of the Content to identify the Content\n"
     },
     "startDate": {
       "type": "string",
-      "description": "start date of content validity",
-      "format": "date-time"
+      "description": "Start date of content validity\n",
+      "format": "date-time",
+      "pattern": "\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}"
     },
     "endDate": {
       "type": "string",
-      "description": "end date of content validity",
-      "format": "date-time"
+      "description": "End date of content validity\n",
+      "format": "date-time",
+      "pattern": "\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}"
     },
     "feature": {
       "type": "string",
-      "description": "feature to which the content belongs to"
+      "description": "Feature to which the content belongs to\n"
     },
     "format": {
       "type": "string",
-      "description": "format of the Content [IMAGE, VIDEO, TEXT,PDF]",
+      "description": "Format of the Content [IMAGE, VIDEO, TEXT,PDF]\n",
       "enum": [
         "IMAGE",
         "VIDEO",
@@ -61,29 +46,67 @@
       ]
     },
     "version": {
-      "type": "string",
-      "description": "version of the Content"
+      "type": "number",
+      "description": "Version of the Content\n",
+      "format": "double"
     },
     "majorVersionFlag": {
       "type": "boolean",
-      "description": "specifies if the version being created is a major"
+      "description": "Specifies if the version being created is a major version\n"
     },
     "assetUrl": {
       "type": "string",
-      "description": "URL of Content. For Image/PDF it could be File system path, For Video it could be File Path or WWW URL"
+      "description": "URL of Content. For Image/PDF it could be File system path, For Video\nit could be File Path or WWW URL\n"
     },
     "text": {
       "type": "string",
-      "description": "text of the Content"
+      "description": "Text of the Content\n"
     },
     "status": {
       "type": "string",
-      "description": "specifies the approval status of the content",
+      "description": "Specifies the approval status of the content\n",
       "enum": [
         "CREATED",
+        "SENTFORREVIEW",
+        "INREVIEW",
         "APPROVED",
-        "REJECTED"
+        "REJECTED",
+        "PUBLISHED"
       ]
+    },
+    "createdBy": {
+      "type": "string",
+      "description": "User who created the Content\n"
+    },
+    "createdDate": {
+      "type": "string",
+      "description": "Created date of the Content\n",
+      "format": "date-time",
+      "pattern": "\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}"
+    },
+    "updatedDate": {
+      "type": "string",
+      "description": "Updated date/published date of the Content\n",
+      "format": "date-time",
+      "pattern": "\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}"
+    },
+    "updatedBy": {
+      "type": "string",
+      "description": "User who updated the Content\n"
+    },
+    "locale": {
+      "type": "string",
+      "description": "locale of the Content\n"
+    },
+    "extendedData": {
+      "type": "object",
+      "description": "Extended Data to hold any format data associated to the Content\n"
+    },
+    "workflowList": {
+      "type": [
+        "WorkFlow"
+      ],
+      "description": "List containing information about diffrent workflow states content was passed through\n"
     }
   },
   "validations": [],

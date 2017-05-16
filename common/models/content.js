@@ -1,5 +1,7 @@
 'use strict';
 
+var Promise = require('bluebird');
+var errorUtils = require('../utils/errorUtils');
 module.exports = function(Content) {
     Content.disableRemoteMethod('find', false);
 	Content.disableRemoteMethod('exists', true);
@@ -18,120 +20,23 @@ module.exports = function(Content) {
     Content.disableRemoteMethod('upsertWithWhere', true);
     Content.disableRemoteMethod('replaceById', true);
     /**
-     * Retrieves all the Content based on content id.
-
-    * @param {string} id Feature to which the Content belongs to (E.g. Account Opening, Login)
-    * @callback {Function} callback Callback function
-    * @param {Error|string} err Error object
-    * @param {Content} result Result object
-    */
-    Content.findContentById = function(id, callback) {
-        Content.find({where: {id: id}},function(err,data){
-            callback(null,data);
-        });
-    }
-    Content.remoteMethod('findContentById',
-    { isStatic: true,
-    produces: [ 'application/json' ],
-    accepts: 
-    [ { arg: 'id',
-        type: 'string',
-        description: 'Feature to which the Content belongs to (E.g. Account Opening, Login)',
-        required: true,
-        http: { source: 'path' } } ],
-    returns: 
-    [ { description: 'Successful Response',
-        type: 'Content',
-        arg: 'data',
-        root: true } ],
-    http: { verb: 'get', path: '/:id' },
-    description: 'Retrieves all the Content based on content id.\n' }
-    );
-    /**
-     * Update Content based on content id.
-
-    * @param {Content} Content 
-    * @param {string} id Id to which the Content belongs to (E.g. Account Opening, Login)
-    * @callback {Function} callback Callback function
-    * @param {Error|string} err Error object
-    * @param {Content} result Result object
-    */
-    Content.updateContetById = function(Content, id, callback) {
-
-    }
-    Content.remoteMethod('updateContetById',
-    { isStatic: true,
-    produces: [ 'application/json' ],
-    accepts: 
-    [ { arg: 'Content',
-        type: 'Content',
-        description: '',
-        required: true,
-        http: { source: 'body' } },
-        { arg: 'id',
-        type: 'string',
-        description: 'Id to which the Content belongs to (E.g. Account Opening, Login)',
-        required: true,
-        http: { source: 'path' } } ],
-    returns: 
-    [ { description: 'Successful Response',
-        type: 'Content',
-        arg: 'data',
-        root: true } ],
-    http: { verb: 'put', path: '/:id' },
-    description: 'Update Content based on content id.\n' }
-    );
-    /**
-     * Updates Content or to make a soft delete based on content id.
-
-    * @param {Content} Content 
-    * @param {string} id to which the Content belongs to (E.g. Account Opening, Login)
-    * @callback {Function} callback Callback function
-    * @param {Error|string} err Error object
-    * @param {Content} result Result object
-    */
-    Content.updateContet = function(Content, id, callback) {
-    
-    }
-
-    Content.remoteMethod('updateContet',
-    { isStatic: true,
-    produces: [ 'application/json' ],
-    accepts: 
-    [ { arg: 'Content',
-        type: 'Content',
-        description: '',
-        required: true,
-        http: { source: 'body' } },
-        { arg: 'id',
-        type: 'string',
-        description: 'Id to which the Content belongs to (E.g. Account Opening, Login)',
-        required: true,
-        http: { source: 'path' } } ],
-    returns: 
-    [ { description: 'Successful Response',
-        type: 'Content',
-        arg: 'data',
-        root: true } ],
-    http: { verb: 'patch', path: '/:id' },
-    description: 'Updates Content or to make a soft delete based on content id.\n' }
-    );
-
-   
-    /**
-     * Default Get to fetch all the Content instances based on filters
+     * Fetch all the Content
 
     * @param {string} filter filter expression provided by calling application
     * @callback {Function} callback Callback function
     * @param {Error|string} err Error object
     * @param {Content} result Result object
     */
-    Content.findContent = function(filter, callback) {
-        Content.find({where: {status: 'CREATED'}, limit: 3},function(err,data){
-            callback(null,data);
+    Content.findAllContent = function(filter, callback) {
+        Content.app.models.Content.find({where:filter},function(err,data){
+            if(err){
+                callback(err);
+            }else {
+                callback(null,data);
+            }
         });
     }
-    Content.remoteMethod('findContent',
+    Content.remoteMethod('findAllContent',
     { isStatic: true,
     accepts: 
     [ { arg: 'filter',
@@ -145,26 +50,131 @@ module.exports = function(Content) {
         arg: 'data',
         root: true } ],
     http: { verb: 'get', path: '/' },
-    description: 'Default Get to fetch all the Content instances based on filters\n' }
+    description: 'Fetch all the Content\n' }
     );
     /**
+     * Update the Content.
+    * @param {Content} content 
+    * @callback {Function} callback Callback function
+    * @param {Error|string} err Error object
+    * @param {Content} result Result object
+    */
+    Content.updateContet = function(Content, callback) {
+        //Content.replaceOrCreate(Content)
+    }
+    Content.remoteMethod('updateContet',
+    { isStatic: true,
+    produces: [ 'application/json' ],
+    accepts: 
+    [ { arg: 'content',
+        type: 'Content',
+        description: '',
+        required: true,
+        http: { source: 'body' } } ],
+    returns: 
+    [ { description: 'Successful Response',
+        type: 'Content',
+        arg: 'data',
+        root: true } ],
+    http: { verb: 'put', path: '/' },
+    description: 'Update the Content.\n' }
+    );
+    /**
+     * Updates WorkFlow of the content.
+    * @param {Content} content 
+    * @callback {Function} callback Callback function
+    * @param {Error|string} err Error object
+    * @param {Content} result Result object
+    */
+    Content.updateWorkflow = function(content, callback) {
+    
+    }
+
+    Content.remoteMethod('updateWorkflow',
+    { isStatic: true,
+    produces: [ 'application/json' ],
+    accepts: 
+    [ { arg: 'content',
+        type: 'Content',
+        description: '',
+        required: true,
+        http: { source: 'body' } } ],
+    returns: 
+    [ { description: 'Successful Response',
+        type: 'Content',
+        arg: 'data',
+        root: true } ],
+    http: { verb: 'patch', path: '/' },
+    description: 'Updates WorkFlow of the content.\n' }
+    );
+    /*
+	 Function for updating document version
+	 */
+	exports.updateDocVersion = function (existingContent, content, callback) {
+		if (existingContent === undefined || existingContent.length === 0) {
+			content.version = '1.00';
+			callback(null, content);
+		}
+		else {
+			if ((existingContent.length > 0) && (content.version === undefined || content.version === null || content.version === '')) {
+				callback(errorUtils.populateError(new Error(), errorCodes.Content.createContent.CNT100));
+			}
+			else {
+				var docVersion = existingContent[0].version;
+				if (docVersion.split('.')[1] !== 99 && content.majorVersionFlag === false) {
+					content.version = (docVersion.split('.')[0]) + '.' + ((parseFloat(docVersion.split('.')[1], 10) + 101).toString().substr(1));
+					callback(null, content);
+				}
+				else {
+					content.version = (parseFloat(docVersion.split('.')[0]) + 1) + '.00';
+					callback(null, content);
+				}
+			}
+		}
+	};
+    /**
      * Creates the Content.
-     * @param {Content} Content the Content to be created.
-     * @callback {Function} callback Callback function
-     * @param {Error|string} err Error object
-     * @param {any} result Result object
-     */
-    Content.createContent = function(Content, callback) {
-        this.create(Content).then(function(data){
-            callback(null,data);
-        });
+    * @param {Content} content the Content to be created.
+    * @callback {Function} callback Callback function
+    * @param {Error|string} err Error object
+    * @param {any} result Result object
+    */
+    Content.createContent = function(content, callback) {
+        var query = {'where': {'title': content.title, 'category': content.category}, order: 'version DESC', limit: 1};
+        try{
+            var findExistingContentP = Promise.promisify(Content.app.models.Content.find,{context: Content.app.models.Content});
+            var updateContentVersionP = Promise.promisify(exports.updateDocVersion);
+            var createContentP = Promise.promisify(Content.app.models.Content.create, {context: Content.app.models.Content});
+
+            findExistingContentP(query)
+                .then(function(existingContent){
+                    return new Promise(function(resolve, reject){
+                        updateContentVersionP(existingContent, content, function(err, data){
+                            if(err){
+                                reject(err);
+                            }else {
+                                resolve(data);
+                            }
+                        });
+                    })
+                })
+                .then(createContentP)
+                .then(function(result){
+                    callback(null,result);
+                })
+                .catch(function(err){
+                    callback(err);
+                })
+        }catch(error){
+            callback(error);
+        }
     }
 
     Content.remoteMethod('createContent',
     { isStatic: true,
     consumes: [ 'application/json' ],
     accepts: 
-    [ { arg: 'Content',
+    [ { arg: 'content',
         type: 'Content',
         description: 'the Content to be created.',
         required: true,

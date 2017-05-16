@@ -38,5 +38,9 @@
   "Content": {
     "dataSource": "db",
     "public": true
+  },
+  "WorkFlow": {
+    "dataSource": "db",
+    "public": false
   }
 }

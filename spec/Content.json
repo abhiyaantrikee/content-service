@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Content Model Specification",
-    "description": "```\n  Current Status : 'Initial Draft'\n```\nModel Specification for Content and its operations:\n  - Creation of a Content\n  - Update a Content\n  - Retrieve Content\n\n** Revision History **\n* 0.0.1, Initial Draft\n",
+    "description": "```\n  Current Status : 'Initial Draft'\n```\nModel Specification for Content and its operations:\n  - Content Management API (Admin)\n    - GET\n      - Retrieve All Content [filters-Optional parameter based on this content will be fetched]\n    - POST\n      - Create Content\n    - PATCH\n      - Partially Update a Content (Workflow update)\n    - PUT\n      - Update a Content\n  - Content Data API (Users)\n    - GET\n      - Retrieve Content ( using Filters and status=PUBLISHED and endDate > Current Date)\n\n** Revision History **\n* 0.0.1, Initial Draft\n",
     "version": "0.0.1"
   },
   "basePath": "/api/v1",
@@ -12,41 +12,41 @@
   ],
   "definitions": {
     "Content": {
-      "description": "Content Entity for creating content of type Image, PDF, text, Video",
+      "description": "Content Entity for creating content of type Image, PDF, text, Video\n",
       "type": "object",
       "properties": {
         "id": {
           "type": "integer",
-          "description": "Unique Id of the Content (equivalent to PRIMARY KEY)",
+          "description": "Unique Id of the Content (equivalent to PRIMARY KEY)\n",
           "format": "int64"
         },
         "title": {
           "type": "string",
-          "description": "Title of the Content shown on the UI"
+          "description": "Title of the Content shown on the UI\n"
         },
         "name": {
           "type": "string",
-          "description": "Name of the Content to identify the Content"
+          "description": "Name of the Content to identify the Content\n"
         },
         "startDate": {
           "type": "string",
-          "description": "Start date of content validity",
+          "description": "Start date of content validity\n",
           "format": "date-time",
           "pattern": "\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}"
         },
         "endDate": {
           "type": "string",
-          "description": "End date of content validity",
+          "description": "End date of content validity\n",
           "format": "date-time",
           "pattern": "\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}"
         },
         "feature": {
           "type": "string",
-          "description": "Feature to which the content belongs to"
+          "description": "Feature to which the content belongs to\n"
         },
         "format": {
           "type": "string",
-          "description": "Format of the Content [IMAGE, VIDEO, TEXT,PDF]",
+          "description": "Format of the Content [IMAGE, VIDEO, TEXT,PDF]\n",
           "enum": [
             "IMAGE",
             "VIDEO",
@@ -56,240 +56,144 @@
         },
         "version": {
           "type": "number",
-          "description": "Version of the Content",
+          "description": "Version of the Content\n",
           "format": "double"
         },
         "majorVersionFlag": {
           "type": "boolean",
-          "description": "Specifies if the version being created is a major version"
+          "description": "Specifies if the version being created is a major version\n"
         },
         "assetUrl": {
           "type": "string",
-          "description": "URL of Content. For Image/PDF it could be File system path, For Video it could be File Path or WWW URL"
+          "description": "URL of Content. For Image/PDF it could be File system path, For Video\nit could be File Path or WWW URL\n"
         },
         "text": {
           "type": "string",
-          "description": "Text of the Content"
+          "description": "Text of the Content\n"
         },
         "status": {
           "type": "string",
-          "description": "Specifies the approval status of the content",
+          "description": "Specifies the approval status of the content\n",
           "enum": [
             "CREATED",
+            "SENTFORREVIEW",
+            "INREVIEW",
             "APPROVED",
-            "REJECTED"
+            "REJECTED",
+            "PUBLISHED"
           ]
         },
         "createdBy": {
           "type": "string",
-          "description": "User who created the Content"
+          "description": "User who created the Content\n"
         },
         "createdDate": {
           "type": "string",
-          "description": "Created date of the Content",
+          "description": "Created date of the Content\n",
           "format": "date-time",
           "pattern": "\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}"
         },
         "updatedDate": {
           "type": "string",
-          "description": "Updated date/published date of the Content",
+          "description": "Updated date/published date of the Content\n",
           "format": "date-time",
           "pattern": "\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}"
         },
         "updatedBy": {
           "type": "string",
-          "description": "User who updated the Content"
+          "description": "User who updated the Content\n"
+        },
+        "locale": {
+          "type": "string",
+          "description": "locale of the Content\n"
+        },
+        "extendedData": {
+          "type": "object",
+          "description": "Extended Data to hold any format data associated to the Content\n"
+        },
+        "workflowList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WorkFlow"
+          },
+          "description": "List containing information about diffrent workflow states content was passed through\n"
         }
       }
     },
     "Error": {
       "type": "object",
-      "description": "This error model inherits loopback default error object",
+      "description": "This error model inherits loopback default error object\n",
       "properties": {
         "errorCode": {
           "type": "string",
-          "description": "Error Code (Business)"
+          "description": "Error Code (Business)\n"
         },
         "message": {
           "type": "string",
-          "description": "Default loopback error object attribute"
+          "description": "Default loopback error object attribute\n"
         },
         "statusCode": {
           "type": "integer",
-          "description": "Default loopback error object attribute",
+          "description": "Default loopback error object attribute\n",
           "format": "int32"
         },
         "additionalProperties": {
           "type": "object",
-          "description": "Additional Properties related to an error, which would not be available in response to Client. This is only for dev and logging",
+          "description": "Additional Properties related to an error, which would not be\navailable in response to Client. This is only for dev and logging\n",
           "properties": {
             "statusCode": {
               "type": "integer",
-              "description": "Status Code of the Error specific to Application",
+              "description": "Status Code of the Error specific to Application\n",
               "format": "int32"
             },
             "statusDescription": {
               "type": "string",
-              "description": "Status Description of the Error specific to Application"
+              "description": "Status Description of the Error specific to Application\n"
             },
             "severity": {
               "type": "string",
-              "description": "Severity of an error"
+              "description": "Severity of an error\n"
             },
             "stackTrace": {
               "type": "string",
-              "description": "Detail Error Message, this would not be available in Response to Client"
-            }
-          }
-        }
-      }
-    }
-  },
-  "paths": {
-    "/{id}": {
-      "get": {
-        "tags": [
-          "Content"
-        ],
-        "operationId": "findContentById",
-        "description": "Retrieves all the Content based on content id.\n",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Feature to which the Content belongs to (E.g. Account Opening, Login)",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "schema": {
-              "$ref": "#/definitions/Content"
-            }
-          },
-          "400": {
-            "description": "Validation Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "500": {
-            "description": "Error Response",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Content"
-        ],
-        "operationId": "updateContetById",
-        "description": "Update Content based on content id.\n",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "Content",
-            "in": "body",
-            "description": "",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Content"
-            }
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Feature to which the Content belongs to (E.g. Account Opening, Login)",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "schema": {
-              "$ref": "#/definitions/Content"
-            }
-          },
-          "400": {
-            "description": "Validation Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "500": {
-            "description": "Error Response",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Content"
-        ],
-        "operationId": "updateContet",
-        "description": "Updates Content or to make a soft delete based on content id.\n",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "Content",
-            "in": "body",
-            "description": "",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Content"
-            }
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Feature to which the Content belongs to (E.g. Account Opening, Login)",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "schema": {
-              "$ref": "#/definitions/Content"
-            }
-          },
-          "400": {
-            "description": "Validation Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "500": {
-            "description": "Error Response",
-            "schema": {
-              "$ref": "#/definitions/Error"
+              "description": "Detail Error Message, this would not be available in Response to\nClient\n"
             }
           }
         }
       }
     },
+    "WorkFlow": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string",
+          "description": "Reviewer who initiated workflow transition\n"
+        },
+        "role": {
+          "type": "string",
+          "description": "Role of the reviewer who initiated workflow transiton\n"
+        },
+        "comment": {
+          "type": "string",
+          "description": "Comments by reviewer\n"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}",
+          "description": "Time when the state transition happened\n"
+        }
+      }
+    }
+  },
+  "paths": {
     "/": {
       "get": {
         "tags": [
           "Content"
         ],
-        "operationId": "findContent",
-        "description": "Default Get to fetch all the Content instances based on filters\n",
+        "operationId": "findAllContent",
+        "description": "Fetch all the Content\n",
         "parameters": [
           {
             "name": "filter",
@@ -319,9 +223,9 @@
         ],
         "parameters": [
           {
-            "name": "Content",
+            "name": "content",
             "in": "body",
-            "description": "the Content to be created.",
+            "description": "the Content to be created.\n",
             "required": true,
             "schema": {
               "$ref": "#/definitions/Content"
@@ -330,12 +234,94 @@
         ],
         "responses": {
           "201": {
-            "description": "Successful response",
+            "description": "Successful response\n",
             "schema": {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/Content"
               }
+            }
+          },
+          "400": {
+            "description": "Validation Error\n",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Error Response\n",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Content"
+        ],
+        "operationId": "updateContet",
+        "description": "Update the Content.\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "content",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Content"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/Content"
+            }
+          },
+          "400": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Error Response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Content"
+        ],
+        "operationId": "updateWorkflow",
+        "description": "Updates WorkFlow of the content.\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "content",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Content"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/Content"
             }
           },
           "400": {
