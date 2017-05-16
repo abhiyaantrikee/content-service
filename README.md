@@ -5,38 +5,29 @@
 Content as a Service (Caas) focuses purely on content management without worrying about the type of output (which can be anything like mobile apps, websites, other channels or devices). CaaS advises to use CMS only for managing content instead of handling its presentation.
 
 ### Characteristics of CaaS
-* Content could be retrieved using simple REST API.
+* Content would be retrieved using simple REST API (Microservices based).
 * Content would be retrieved in well defined structure such as JSON.
-* Highly customizable Content structures could be defined.
-* Availability of Web interface to manage Content.
-* Webhooks are available to respond to any Content updates.
-* Content would be hosted in the cloud.
+* Content Model could be extended with customized attributes according to the domain.
+* Web interface would be available for Admin (Content Writers, Business Users) to manage Content easily.
+* Webhooks would be available to act upon Content updates like to send notifications etc.
+* Content could be hosted in the cloud.
 
 ### CaaS Vs Traditional CMS
-* Structured Content
-* Decoupled Approach
-* Seperation of Content and Presentation
-* Content Available on Cloud
+* Structured response for Content
+* Seperation of Content and Presentation (Decoupled)
+* Content Availablity on Cloud
 
 ### Usages of Caas
-* Content as backend for Mobile Apps
-* Content published for multi-channels
-* Rich WebApps using latest MV* Frameworks
-* Integration with existing applications/services
+* Content would be available as backend/APIs for Web / Mobile Apps.
+* Content would be published for multi-channels in one go.
+* Content would be integrated into Rich WebApps using latest MV* Frameworks
+* Content Integration with existing applications/services
 * Customized UX
-* Programatically Content Creation through APIs
+* Content creation would be required programatically through APIs
 
 ### Limitations of CaaS
-* Not apt for personal blogs.
-* Huge effort in case Content is for only one channel
-* Complex in case Content is only for one channel. Much cheaper and simple solutions are available for this case.
-
-### Adoption of CaaS
-
-##### Developer
-
-##### Business
-
+* Not apt for sites related to personal blogs.
+* Huge effort and complex in case Content would be available only for one channel. There are cheaper and simple solutions are available.
 
 # Contributing to abhiyaantrikee/content-service
 
