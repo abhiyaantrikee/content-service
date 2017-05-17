@@ -29,6 +29,21 @@ Content as a Service (Caas) focuses purely on content management without worryin
 * Not apt for sites related to personal blogs.
 * Huge effort and complex in case Content would be available only for one channel. There are cheaper and simple solutions are available.
 
+# Installation
+ To be updated
+ 
+# Content as a Service - API Details 
+| Content Management API (Admin)| Path| Description|
+| :---------------------------: |:---:|:---|
+|**GET** | */contents*|Retrieve All Content [filters-Optional parameter based on this content will be fetched]
+|**POST** | */contents*|Create Content|
+|**PATCH** |*/contents* |Partially Update a Content (Workflow update)|
+|**PUT** |*/contents* |Update a Content|
+
+|Content Data API (Users) | Path| Description|
+| :-----------------------: |:---:|:---|
+| **GET**                   | */contents* | Retrieve Content ( using Filters and status=PUBLISHED and endDate > Current Date) |
+
 # Contributing to abhiyaantrikee/content-service
 
 We welcome contributions, but request you follow these guidelines.
