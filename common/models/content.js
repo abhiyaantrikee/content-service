@@ -2,6 +2,7 @@
 
 var Promise = require('bluebird');
 var errorUtils = require('../utils/errorUtils');
+var debug = require('debug') ('content');
 module.exports = function(Content) {
     Content.disableRemoteMethod('find', false);
 	Content.disableRemoteMethod('exists', true);
@@ -52,6 +53,31 @@ module.exports = function(Content) {
     http: { verb: 'get', path: '/' },
     description: 'Fetch all the Content\n' }
     );
+    /*
+    Function for updating document version
+    */
+	exports.updateDocVersion = function (existingContent, content, callback) {
+		if (existingContent === undefined || existingContent.length === 0) {
+			content.version = '1.00';
+			callback(null, content);
+		}
+		else {
+			if ((existingContent.length > 0) && (content.version === undefined || content.version === null || content.version === '')) {
+				callback(errorUtils.populateError(new Error(), errorCodes.Content.createContent.CNT100));
+			}
+			else {
+				var docVersion = existingContent[0].version;
+				if (docVersion.split('.')[1] !== 99 && content.majorVersionFlag === false) {
+					content.version = (docVersion.split('.')[0]) + '.' + ((parseFloat(docVersion.split('.')[1], 10) + 101).toString().substr(1));
+					callback(null, content);
+				}
+				else {
+					content.version = (parseFloat(docVersion.split('.')[0]) + 1) + '.00';
+					callback(null, content);
+				}
+			}
+		}
+	};
     /**
      * Update the Content.
     * @param {Content} content 
@@ -59,8 +85,35 @@ module.exports = function(Content) {
     * @param {Error|string} err Error object
     * @param {Content} result Result object
     */
-    Content.updateContet = function(Content, callback) {
-        //Content.replaceOrCreate(Content)
+    Content.updateContet = function(content, callback) {
+       var query = {'where': {'title': content.title}, order: 'version DESC', limit: 1};
+        try{
+            var findExistingContentP = Promise.promisify(Content.app.models.Content.find,{context: Content.app.models.Content});
+            var updateContentVersionP = Promise.promisify(exports.updateDocVersion);
+            var updateContentP = Promise.promisify(Content.app.models.Content.replaceOrCreate, {context: Content.app.models.Content});
+
+            findExistingContentP(query)
+                .then(function(existingContent){
+                    return new Promise(function(resolve, reject){
+                        updateContentVersionP(existingContent, content, function(err, data){
+                            if(err){
+                                reject(err);
+                            }else {
+                                resolve(data);
+                            }
+                        });
+                    })
+                })
+                .then(updateContentP)
+                .then(function(result){
+                    callback(null,result);
+                })
+                .catch(function(err){
+                    callback(err);
+                })
+        }catch(error){
+            callback(error);
+        }
     }
     Content.remoteMethod('updateContet',
     { isStatic: true,
@@ -107,31 +160,6 @@ module.exports = function(Content) {
     http: { verb: 'patch', path: '/' },
     description: 'Updates WorkFlow of the content.\n' }
     );
-    /*
-	 Function for updating document version
-	 */
-	exports.updateDocVersion = function (existingContent, content, callback) {
-		if (existingContent === undefined || existingContent.length === 0) {
-			content.version = '1.00';
-			callback(null, content);
-		}
-		else {
-			if ((existingContent.length > 0) && (content.version === undefined || content.version === null || content.version === '')) {
-				callback(errorUtils.populateError(new Error(), errorCodes.Content.createContent.CNT100));
-			}
-			else {
-				var docVersion = existingContent[0].version;
-				if (docVersion.split('.')[1] !== 99 && content.majorVersionFlag === false) {
-					content.version = (docVersion.split('.')[0]) + '.' + ((parseFloat(docVersion.split('.')[1], 10) + 101).toString().substr(1));
-					callback(null, content);
-				}
-				else {
-					content.version = (parseFloat(docVersion.split('.')[0]) + 1) + '.00';
-					callback(null, content);
-				}
-			}
-		}
-	};
     /**
      * Creates the Content.
     * @param {Content} content the Content to be created.
@@ -140,7 +168,8 @@ module.exports = function(Content) {
     * @param {any} result Result object
     */
     Content.createContent = function(content, callback) {
-        var query = {'where': {'title': content.title, 'category': content.category}, order: 'version DESC', limit: 1};
+        debug('inside createContent method');
+       var query = {'where': {'title': content.title}, order: 'version DESC', limit: 1};
         try{
             var findExistingContentP = Promise.promisify(Content.app.models.Content.find,{context: Content.app.models.Content});
             var updateContentVersionP = Promise.promisify(exports.updateDocVersion);

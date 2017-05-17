@@ -46,9 +46,8 @@
       ]
     },
     "version": {
-      "type": "number",
-      "description": "Version of the Content\n",
-      "format": "double"
+      "type": "string",
+      "description": "Version of the Content\n"
     },
     "majorVersionFlag": {
       "type": "boolean",
@@ -111,6 +110,5 @@
   },
   "validations": [],
   "relations": {},
-  "acls": [],
   "methods": {}
 }

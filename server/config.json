@@ -2,6 +2,7 @@
   "restApiRoot": "/api",
   "host": "0.0.0.0",
   "port": 3000,
+  "httpOnly": false,
   "remoting": {
     "context": false,
     "rest": {
@@ -20,5 +21,9 @@
     "cors": false
   },
   "legacyExplorer": false,
-  "logoutSessionsOnSensitiveChanges": true
+  "logoutSessionsOnSensitiveChanges": true,
+  "sslConfig": {
+    "privateKey": "./ssl/server.key",
+    "certificate": "./ssl/server.crt"
+  }
 }

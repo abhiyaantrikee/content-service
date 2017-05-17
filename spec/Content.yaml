@@ -71,10 +71,9 @@ definitions:
           - TEXT
           - PDF
       version:
-        type: number
+        type: string
         description: |
           Version of the Content
-        format: double
       majorVersionFlag:
         type: boolean
         description: |

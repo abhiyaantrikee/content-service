@@ -2,20 +2,38 @@
 
 var loopback = require('loopback');
 var boot = require('loopback-boot');
-
+var http = require('http');
+var https = require('https');
 var app = module.exports = loopback();
+var fs  = require('fs');
+var path = require('path');
 
-app.start = function() {
+app.start = function(cb) {
   // start the web server
-  return app.listen(function() {
-    app.emit('started');
-    var baseUrl = app.get('url').replace(/\/$/, '');
-    console.log('Web server listening at: %s', baseUrl);
-    if (app.get('loopback-component-explorer')) {
-      var explorerPath = app.get('loopback-component-explorer').mountPath;
-      console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
-    }
+  var sslConfig = app.get('sslConfig');
+  var httpOnly = app.get('httpOnly');
+  var server=null;
+  if(!httpOnly){
+    var options = {
+              key: fs.readFileSync(path.join(__dirname, sslConfig.privateKey)).toString(),
+              cert: fs.readFileSync(path.join(__dirname, sslConfig.certificate)).toString()
+    };
+    server = https.createServer(options, app);
+  }else{
+    http.createServer(app);
+  }
+ // start the web server
+  server.listen(app.get('port'), function () {
+      var baseUrl = (httpOnly ? 'http://' : 'https://') + app.get('host') + ':' + app.get('port');
+      app.emit('started', baseUrl);
+      console.log('LoopBack server listening @ %s%s', baseUrl, '/');
+      if (app.get('loopback-component-explorer')) {
+          var explorerPath = app.get('loopback-component-explorer').mountPath;
+          console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
+      }
+      cb && cb();
   });
+  return server;
 };
 
 // Bootstrap the application, configure models, datasources and middleware.
