@@ -2,12 +2,5 @@
   "db": {
     "name": "db",
     "connector": "memory"
-  },
-  "mongoDs": {
-    "host": "192.168.99.101",
-    "port": 27017,
-    "database": "content-db",
-    "name": "mongoDs",
-    "connector": "mongodb"
   }
 }

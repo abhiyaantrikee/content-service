@@ -4,9 +4,8 @@
 var Promise = require('bluebird');
 var errorUtils = require('../utils/errorUtils');
 var debug = require('debug') ('content');
-
 module.exports = function(Content) {
-    Content.disableRemoteMethod('find', false);
+    Content.disableRemoteMethod('find', true);
 	Content.disableRemoteMethod('exists', true);
 	Content.disableRemoteMethod('findOne', true);
 	Content.disableRemoteMethod('count', true);
@@ -31,9 +30,10 @@ module.exports = function(Content) {
     * @param {Error|string} err Error object
     * @param {Content} result Result object
     */
-    Content.findAllContent = function(filter, callback) {
+    Content.findAllContent = function(filter, access_token, callback) {
         Content.app.models.Content.find({where:filter},function(err,data){
             if(err){
+                debug('Error occured while fetching contents');
                 callback(err);
             }else {
                 callback(null,data);
@@ -43,21 +43,30 @@ module.exports = function(Content) {
 
     //REMOTE METHOD DEFINITION
     Content.remoteMethod('findAllContent',
-    { isStatic: true,
-    accepts: 
-    [ { arg: 'filter',
-        type: 'string',
-        description: 'filter expression provided by calling application',
-        required: false,
-        http: { source: 'query' } } ],
-    returns: 
-    [ { description: 'Successful Response',
-        type: 'Content',
-        arg: 'data',
-        root: true } ],
-    http: { verb: 'get', path: '/' },
-    description: 'Fetch all the Content\n' }
-    );
+    { 
+        isStatic: true,
+        accepts: 
+        [ { arg: 'filter',
+            type: 'string',
+            description: 'filter expression provided by calling application',
+            required: false,
+            http: { source: 'query' } 
+        },
+        {
+            arg: 'access_token',
+            type: 'string',
+            description: 'token to be passed as a header',
+            required: false,
+            http: {source: 'header'}
+        }],
+        returns: 
+        [ { description: 'Successful Response',
+            type: 'Content',
+            arg: 'data',
+            root: true } ],
+        http: { verb: 'get', path: '/' },
+        description: 'Fetch all the Content\n' 
+    });
 
     /*
         Private Function for updating document version
@@ -113,12 +122,14 @@ module.exports = function(Content) {
                 })
                 .then(updateContentP)
                 .then(function(result){
+                    debug('Successfully updated content');
                     callback(null,result);
                 })
                 .catch(function(err){
                     callback(err);
                 })
         }catch(error){
+            debug('Error occured while updating contents', error);
             callback(error);
         }
     }
@@ -200,12 +211,14 @@ module.exports = function(Content) {
                 })
                 .then(createContentP)
                 .then(function(result){
+                    debug('Successfully updated content');
                     callback(null,result);
                 })
                 .catch(function(err){
                     callback(err);
                 })
         }catch(error){
+            debug('Error occurred while creating content', error);
             callback(error);
         }
     }
