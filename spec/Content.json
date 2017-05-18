@@ -259,7 +259,7 @@
         "tags": [
           "Content"
         ],
-        "operationId": "updateContet",
+        "operationId": "updateContent",
         "description": "Update the Content.\n",
         "produces": [
           "application/json"

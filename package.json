@@ -1,6 +1,6 @@
 {
   "name": "content-service",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "server/server.js",
   "engines": {
     "node": ">=4"
@@ -28,9 +28,10 @@
     "eslint": "^3.17.1",
     "eslint-config-loopback": "^8.0.0",
     "gulp": "^3.9.1",
-    "nsp": "^2.1.0",
     "gulp-nsp": "2.4.2",
-    "gulp-shrinkwrap": "2.0.3"
+    "gulp-shrinkwrap": "2.0.3",
+    "jsdoc": "^3.4.3",
+    "nsp": "^2.1.0"
   },
   "repository": {
     "type": "",

@@ -1,10 +1,7 @@
 {
   "name": "WorkFlow",
-  "base": "PersistedModel",
+  "base": "Model",
   "idInjection": true,
-  "options": {
-    "validateUpsert": true
-  },
   "properties": {
     "userName": {
       "type": "string",

@@ -1,8 +1,10 @@
 'use strict';
 
+//define variables
 var Promise = require('bluebird');
 var errorUtils = require('../utils/errorUtils');
 var debug = require('debug') ('content');
+
 module.exports = function(Content) {
     Content.disableRemoteMethod('find', false);
 	Content.disableRemoteMethod('exists', true);
@@ -20,8 +22,9 @@ module.exports = function(Content) {
     Content.disableRemoteMethod('replaceOrCreate', true);
     Content.disableRemoteMethod('upsertWithWhere', true);
     Content.disableRemoteMethod('replaceById', true);
+
     /**
-     * Fetch all the Content
+     * Fetch all the Content. Filter would be used to filter out the results and to fetch limited data set.
 
     * @param {string} filter filter expression provided by calling application
     * @callback {Function} callback Callback function
@@ -37,6 +40,8 @@ module.exports = function(Content) {
             }
         });
     }
+
+    //REMOTE METHOD DEFINITION
     Content.remoteMethod('findAllContent',
     { isStatic: true,
     accepts: 
@@ -53,8 +58,9 @@ module.exports = function(Content) {
     http: { verb: 'get', path: '/' },
     description: 'Fetch all the Content\n' }
     );
+
     /*
-    Function for updating document version
+        Private Function for updating document version
     */
 	exports.updateDocVersion = function (existingContent, content, callback) {
 		if (existingContent === undefined || existingContent.length === 0) {
@@ -78,20 +84,21 @@ module.exports = function(Content) {
 			}
 		}
 	};
+
     /**
-     * Update the Content.
+    * Update the Content.
     * @param {Content} content 
     * @callback {Function} callback Callback function
     * @param {Error|string} err Error object
     * @param {Content} result Result object
     */
-    Content.updateContet = function(content, callback) {
+    Content.updateContent = function(content, callback) {
        var query = {'where': {'title': content.title}, order: 'version DESC', limit: 1};
         try{
             var findExistingContentP = Promise.promisify(Content.app.models.Content.find,{context: Content.app.models.Content});
             var updateContentVersionP = Promise.promisify(exports.updateDocVersion);
             var updateContentP = Promise.promisify(Content.app.models.Content.replaceOrCreate, {context: Content.app.models.Content});
-
+            //Promisified method call
             findExistingContentP(query)
                 .then(function(existingContent){
                     return new Promise(function(resolve, reject){
@@ -115,7 +122,8 @@ module.exports = function(Content) {
             callback(error);
         }
     }
-    Content.remoteMethod('updateContet',
+    //REMOTE METHOD DEFINITION
+    Content.remoteMethod('updateContent',
     { isStatic: true,
     produces: [ 'application/json' ],
     accepts: 
@@ -132,6 +140,7 @@ module.exports = function(Content) {
     http: { verb: 'put', path: '/' },
     description: 'Update the Content.\n' }
     );
+
     /**
      * Updates WorkFlow of the content.
     * @param {Content} content 
@@ -140,9 +149,10 @@ module.exports = function(Content) {
     * @param {Content} result Result object
     */
     Content.updateWorkflow = function(content, callback) {
-    
+        //TODO: Need to provide the implementation
     }
 
+    //REMOTE METHOD DEFINITION
     Content.remoteMethod('updateWorkflow',
     { isStatic: true,
     produces: [ 'application/json' ],
@@ -160,8 +170,9 @@ module.exports = function(Content) {
     http: { verb: 'patch', path: '/' },
     description: 'Updates WorkFlow of the content.\n' }
     );
+
     /**
-     * Creates the Content.
+    * Creates the Content.
     * @param {Content} content the Content to be created.
     * @callback {Function} callback Callback function
     * @param {Error|string} err Error object
@@ -174,7 +185,7 @@ module.exports = function(Content) {
             var findExistingContentP = Promise.promisify(Content.app.models.Content.find,{context: Content.app.models.Content});
             var updateContentVersionP = Promise.promisify(exports.updateDocVersion);
             var createContentP = Promise.promisify(Content.app.models.Content.create, {context: Content.app.models.Content});
-
+            //Promisified method call
             findExistingContentP(query)
                 .then(function(existingContent){
                     return new Promise(function(resolve, reject){
@@ -199,6 +210,7 @@ module.exports = function(Content) {
         }
     }
 
+    //REMOTE METHOD DEFINITION
     Content.remoteMethod('createContent',
     { isStatic: true,
     consumes: [ 'application/json' ],

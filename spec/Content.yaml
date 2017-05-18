@@ -252,7 +252,7 @@ paths:
     put:
       tags:
         - Content
-      operationId: updateContet
+      operationId: updateContent
       description: |
         Update the Content.
       produces:
