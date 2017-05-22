@@ -1,0 +1,307 @@
+swagger: '2.0'
+info:
+  title: Content Model Specification
+  description: |
+    ```
+      Current Status : 'Initial Draft'
+    ```
+    Model Specification for Content and its operations:
+      - Content Management API (Admin)
+        - GET
+          - Retrieve All Content [filters-Optional parameter based on this content will be fetched]
+        - POST
+          - Create Content
+        - PATCH
+          - Partially Update a Content (Workflow update)
+        - PUT
+          - Update a Content
+      - Content Data API (Users)
+        - GET
+          - Retrieve Content ( using Filters and status=PUBLISHED and endDate > Current Date)
+
+    ** Revision History **
+    * 0.0.1, Initial Draft
+  version: 0.0.1
+basePath: /api/v1
+schemes:
+  - http
+  - https
+definitions:
+  Content:
+    description: |
+      Content Entity for creating content of type Image, PDF, text, Video
+    type: object
+    properties:
+      id:
+        type: integer
+        description: |
+          Unique Id of the Content (equivalent to PRIMARY KEY)
+        format: int64
+      title:
+        type: string
+        description: |
+          Title of the Content shown on the UI
+      name:
+        type: string
+        description: |
+          Name of the Content to identify the Content
+      startDate:
+        type: string
+        description: |
+          Start date of content validity
+        format: date-time
+        pattern: '\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}'
+      endDate:
+        type: string
+        description: |
+          End date of content validity
+        format: date-time
+        pattern: '\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}'
+      feature:
+        type: string
+        description: |
+          Feature to which the content belongs to
+      format:
+        type: string
+        description: |
+          Format of the Content [IMAGE, VIDEO, TEXT,PDF]
+        enum:
+          - IMAGE
+          - VIDEO
+          - TEXT
+          - PDF
+      version:
+        type: string
+        description: |
+          Version of the Content
+      majorVersionFlag:
+        type: boolean
+        description: |
+          Specifies if the version being created is a major version
+      assetUrl:
+        type: string
+        description: |
+          URL of Content. For Image/PDF it could be File system path, For Video
+          it could be File Path or WWW URL
+      text:
+        type: string
+        description: |
+          Text of the Content
+      status:
+        type: string
+        description: |
+          Specifies the approval status of the content
+        enum:
+          - CREATED
+          - SENTFORREVIEW
+          - INREVIEW
+          - APPROVED
+          - REJECTED
+          - PUBLISHED
+      createdBy:
+        type: string
+        description: |
+          User who created the Content
+      createdDate:
+        type: string
+        description: |
+          Created date of the Content
+        format: date-time
+        pattern: '\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}'
+      updatedDate:
+        type: string
+        description: |
+          Updated date/published date of the Content
+        format: date-time
+        pattern: '\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}'
+      updatedBy:
+        type: string
+        description: |
+          User who updated the Content
+      locale:
+        type: string
+        description: |
+          locale of the Content
+      extendedData:
+        type: object
+        description: |
+          Extended Data to hold any format data associated to the Content
+      workflowList:
+        type: array
+        items:
+          $ref: '#/definitions/WorkFlow'
+        description: >
+          List containing information about diffrent workflow states content was
+          passed through
+  Error:
+    type: object
+    description: |
+      This error model inherits loopback default error object
+    properties:
+      errorCode:
+        type: string
+        description: |
+          Error Code (Business)
+      message:
+        type: string
+        description: |
+          Default loopback error object attribute
+      statusCode:
+        type: integer
+        description: |
+          Default loopback error object attribute
+        format: int32
+      additionalProperties:
+        type: object
+        description: |
+          Additional Properties related to an error, which would not be
+          available in response to Client. This is only for dev and logging
+        properties:
+          statusCode:
+            type: integer
+            description: |
+              Status Code of the Error specific to Application
+            format: int32
+          statusDescription:
+            type: string
+            description: |
+              Status Description of the Error specific to Application
+          severity:
+            type: string
+            description: |
+              Severity of an error
+          stackTrace:
+            type: string
+            description: |
+              Detail Error Message, this would not be available in Response to
+              Client
+  WorkFlow:
+    type: object
+    properties:
+      userName:
+        type: string
+        description: |
+          Reviewer who initiated workflow transition
+      role:
+        type: string
+        description: |
+          Role of the reviewer who initiated workflow transiton
+      comment:
+        type: string
+        description: |
+          Comments by reviewer
+      date:
+        type: string
+        format: date-time
+        pattern: '\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}'
+        description: |
+          Time when the state transition happened
+paths:
+  /:
+    get:
+      tags:
+        - Content
+      operationId: findAllContent
+      description: |
+        Fetch all the Content
+      parameters:
+        - name: filter
+          in: query
+          description: filter expression provided by calling application
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/Content'
+    post:
+      tags:
+        - Content
+      description: |
+        Creates the Content.
+      operationId: createContent
+      consumes:
+        - application/json
+      parameters:
+        - name: content
+          in: body
+          description: |
+            the Content to be created.
+          required: true
+          schema:
+            $ref: '#/definitions/Content'
+      responses:
+        '201':
+          description: |
+            Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Content'
+        '400':
+          description: |
+            Validation Error
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            Error Response
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      tags:
+        - Content
+      operationId: updateContent
+      description: |
+        Update the Content.
+      produces:
+        - application/json
+      parameters:
+        - name: content
+          in: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/Content'
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/Content'
+        '400':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Error Response
+          schema:
+            $ref: '#/definitions/Error'
+    patch:
+      tags:
+        - Content
+      operationId: updateWorkflow
+      description: |
+        Updates WorkFlow of the content.
+      produces:
+        - application/json
+      parameters:
+        - name: content
+          in: body
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/Content'
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/Content'
+        '400':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Error Response
+          schema:
+            $ref: '#/definitions/Error'
