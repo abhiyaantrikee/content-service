@@ -1,5 +1,28 @@
 # content-service (Content as a Service Application)
 
+## Setup
+
+### Docker
+[Docker](https://www.docker.com/) is required to build and start mandrake. Click here for [setup instructions](https://docs.docker.com/engine/installation/)
+
+#### Checkout code
+```
+git https://github.com/abhiyaantrikee/content-service.git
+```
+#### Build content-service
+```
+cd content-service
+docker-compose build
+```
+#### Start servers
+```
+docker-compose up -d
+```
+- docker-ip: ```docker-machine ip```
+- content-service: https://docker-ip:9000/explorer
+
+[Win/Mac]: For the ports to be accessible on localhost, add port-forwarding in virtualbox.
+
 **Content as a Service** is a new type of CMS, different than traditional CMS like WordPress which provides one stop solution for creating websites, managing and publishing its content.
 
 Content as a Service (Caas) focuses purely on content management without worrying about the type of output (which can be anything like mobile apps, websites, other channels or devices). CaaS advises to use CMS only for managing content instead of handling its presentation.
