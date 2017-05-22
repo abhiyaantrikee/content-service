@@ -2,7 +2,7 @@
 
 **Content as a Service (CaaS)** is a new type of CMS which is different than traditional CMS. Traditional CMS provides one stop shop solution for creating websites, managing and publishing its content.
 
-Content as a Service (Caas) emphases essentially on content management without thinking about the type of output (which could be for any channel like mobile apps, websites, other devices). CaaS counsels to use CMS only for managing content instead of handling its output/presentation.
+Content as a Service (Caas) emphases essentially on content management without thinking about the type of end-users(which could be for any channel like mobile apps, websites, other devices). CaaS counsels to use CMS only for managing content instead of handling its output/presentation.
 
 ### Characteristics of CaaS
 * Content would be retrieved only using simple REST API (Microservices based).
