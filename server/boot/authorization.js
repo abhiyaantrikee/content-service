@@ -1,4 +1,4 @@
-var debug = require('debug') ('authorisation');
+var debug = require('debug') ('authorization');
 module.exports = function(app) {
     var promise = require('bluebird');
     var User = app.models.User;
@@ -24,7 +24,7 @@ module.exports = function(app) {
                 createRoleAndMapping(role.name,role.userId);
             });
         }
-        
+
     });
 
     function createRoleAndMapping(roleName,userId){
@@ -33,7 +33,7 @@ module.exports = function(app) {
                 }, function(err, role) {
                 if (err) throw err;
                 debug('Role created successfully');
-                console.log('Created role:', role);
+                debug('Created role:', role);
 
                 //make bob an admin
                 role.principals.create({
@@ -42,7 +42,7 @@ module.exports = function(app) {
                 }, function(err, principal) {
                     if (err) throw err;
                     debug('Principle mapping done successfully');
-                    console.log('Created principal:', principal);
+                    debug('Created principal:', principal);
                 });
             });
     }

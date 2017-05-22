@@ -7,6 +7,7 @@ var https = require('https');
 var app = module.exports = loopback();
 var fs  = require('fs');
 var path = require('path');
+var debug = require('debug');
 
 app.start = function(cb) {
   // start the web server
@@ -26,10 +27,10 @@ app.start = function(cb) {
   server.listen(app.get('port'), function () {
       var baseUrl = (httpOnly ? 'http://' : 'https://') + app.get('host') + ':' + app.get('port');
       app.emit('started', baseUrl);
-      console.log('LoopBack server listening @ %s%s', baseUrl, '/');
+      debug('LoopBack server listening @ %s%s', baseUrl, '/');
       if (app.get('loopback-component-explorer')) {
           var explorerPath = app.get('loopback-component-explorer').mountPath;
-          console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
+          debug('Browse your REST API at %s%s', baseUrl, explorerPath);
       }
       cb && cb();
   });
