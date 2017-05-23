@@ -1,127 +1,142 @@
 # content-service (Content as a Service Application)
 
-**Content as a Service** is a new type of CMS, different than traditional CMS like WordPress which provides one stop solution for creating websites, managing and publishing its content.
+**Content as a Service (CaaS)** is a new type of CMS which is different than traditional CMS. Traditional CMS provides one stop shop solution for creating websites, managing and publishing its content.
 
-Content as a Service (Caas) focuses purely on content management without worrying about the type of output (which can be anything like mobile apps, websites, other channels or devices). CaaS advises to use CMS only for managing content instead of handling its presentation.
+Content as a Service (Caas) emphases essentially on content management without thinking about the type of end-users(which could be for any channel like mobile apps, websites, other devices). CaaS counsels to use CMS only for managing content instead of handling its output/presentation.
 
 ### Characteristics of CaaS
-* Content would be retrieved using simple REST API (Microservices based).
-* Content would be retrieved in well defined structure such as JSON.
-* Content Model could be extended with customized attributes according to the domain.
+* Content would be retrieved only using simple REST API (Microservices based).
+* Content would be retrieved in well defined structure (JSON).
 * Web interface would be available for Admin (Content Writers, Business Users) to manage Content easily.
-* Webhooks would be available to act upon Content updates like to send notifications etc.
+* Hooks would be available to act upon Content updates like to send notifications etc.
 * Content could be hosted in the cloud.
 
 ### CaaS Vs Traditional CMS
 * Structured response for Content
 * Seperation of Content and Presentation (Decoupled)
-* Content Availablity on Cloud
+* Content availablity on Cloud
 
 ### Usages of Caas
-* Content would be available as backend/APIs for Web / Mobile Apps.
-* Content would be published for multi-channels in one go.
+* Content would be available as backend/APIs for Web / Mobile Apps or other channels.
+* Content could be published for multi-channels easily.
 * Content would be integrated into Rich WebApps using latest MV* Frameworks
 * Content Integration with existing applications/services
-* Customized UX
-* Content creation would be required programatically through APIs
+* Content to be presented on highly customized UX
+* Content creation would be done programatically through APIs provided as Microservices.
 
-### Limitations of CaaS
-* Not apt for sites related to personal blogs.
-* Huge effort and complex in case Content would be available only for one channel. There are cheaper and simple solutions are available.
+## Project Badges
 
-# Contributing to abhiyaantrikee/content-service
+* Build status: [![Build Status](https://travis-ci.org/abhiyaantrikee/content-service.svg)](https://travis-ci.org/abhiyaantrikee/content-service)
+* License: [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/abhiyaantrikee/content-service/master/LICENSE)
 
-We welcome contributions, but request you follow these guidelines.
- - [Raising issues](#raising-issues)
- - [Feature requests](#feature-requests)
- - [Pull-Requests](#pull-requests)
+# Installation
+### Docker
+[Docker](https://www.docker.com/) is a *pre-requisite* to build and start **content-service** application. Click here for [docker setup instructions](https://docs.docker.com/engine/installation/)
 
-This project adheres to the [Contributor Covenant 1.4](http://contributor-covenant.org/version/1/4/).
-By participating, you are expected to uphold this code. Please report unacceptable
-behavior to any of the [project's core team].
+#### Clone code
+```
+git clone https://github.com/abhiyaantrikee/content-service.git
+```
+#### Build 
+```
+cd content-service
+docker-compose build
+```
+#### Start servers
+```
+docker-compose up -d
+```
+- docker-ip: ```docker-machine ip```
+- content-service (Strongloop explorer): https://docker-ip:9000/explorer
 
-## Raising issues
+**[Win/Mac]**: For the ports to be accessible on localhost, add port-forwarding in virtualbox.
 
-Please raise any bug reports on the relevant project's issue tracker. Be sure to
-search the list to see if your issue has already been raised.
+# Content as a Service (CaaS) - API Details 
+| Content Management API (Admin)| Path| Description|
+| :---------------------------: |:---:|:---|
+|**GET** | */contents*|Retrieve All Content [filters-Optional parameter based on this content will be fetched]
+|**POST** | */contents*|Create Content|
+|**PATCH** |*/contents* |Partially Update a Content (Workflow update)|
+|**PUT** |*/contents* |Update a Content|
 
-A good bug report is one that make it easy for us to understand what you were
-trying to do and what went wrong.
+|Content Data API (Users) | Path| Description|
+| :-----------------------: |:---:|:---|
+| **GET**                   | */contents* | Retrieve Content ( using Filters and status=PUBLISHED and endDate > Current Date) |
 
-Provide as much context as possible so we can try to recreate the issue.
-If possible, include the relevant part of your flow. To do this, select the
-relevant nodes, press Ctrl-E and copy the flow data from the Export dialog.
+### Usage
+content-service API`s are protected with ACL, in order to use the API we need to pass authorization(access) token in the request header.
+There are two Users having different role and access:
+```
+john@doe.com : is an enduser having consumer role and have access to below URL
+```
+|HTTP METHOD | URL|
+| :-----------------------: |:---:|
+| **GET**                   |  https://docker-ip:9000/api/Contents/ | 
 
-At a minimum, please include:
+```
+bob@doe.com : is an adming having admin role and have access to below URLs
+```
 
- - Version of content-service - either release number if you downloaded a zip, or the first few lines of `git log` if you are cloning the repository directly.
- - Version of node.js - what does `node -v` say?
+|HTTP METHOD | URL|
+| :-----------------------: | :---: |
+| **GET/POST/PUT/PATCH**|  https://docker-ip:9000/api/Contents/ |
 
-## Feature requests
 
-For feature requests, please raise them on the [issues page](https://github.com/abhiyaantrikee/content-service/issues) with label "enhancement".
+*Steps to get access token:*
 
-## Pull-Requests
+**1.** Use POST - https://docker-ip:9000/api/Users/login to get the access token.
+**Payload example:** 
+```
+{"email": "john@doe.com", "password": "password"}
+```
 
-If you want to raise a pull-request with a new feature, or a refactoring
-of existing code, it may well get rejected if you haven't discussed it on
-the [issues page](https://github.com/abhiyaantrikee/content-service/issues) first.
+**Response**
+```
+{
+  "id": "xEcPhyKQMk3IgmQFdL670a11OXQKSxCeLjUDLS9Pk24HuIO7oaZApO8zAPumd0LU",
+  "ttl": 1209600,
+  "created": "2017-05-23T04:32:26.105Z",
+  "userId": 1
+}
+```
 
-### Coding standards
+**2.** Set the access token with the value present under *id* tag (in above response).
+**3.** Use POST - https://docker-ip:9000/api/Contents/
+**Payload example:**
+```
+{
+  "id": 0,
+  "title": "Content Title",
+  "name": "Content Name",
+  "startDate": "2017-05-22T11:06:30.754Z",
+  "endDate": "2019-05-22T11:06:30.754Z",
+  "feature": "Content's Feature",
+  "format": "TEXT",
+  "version": "1.0",
+  "majorVersionFlag": true,
+  "assetUrl": "Content Asset URL",
+  "text": "Content TEXT",
+  "status": "CREATED",
+  "createdBy": "USER CREATED THE CONTENT",
+  "createdDate": "2017-05-22T11:06:30.756Z",
+  "updatedDate": "2017-05-22T11:06:30.756Z",
+  "updatedBy": "USER UPDATED THE CONTENT",
+  "locale": "CONTENT's LOCATE",
+  "extendedData": {},
+  "workflowList": [
+    {
+      "userName": "USER UPDATED THE WORKFLOW",
+      "role": "USER's ROLE",
+      "comment": "COMMENTS, if any provided by the CONTENT Owner",
+      "date": "2017-05-22T11:06:30.758Z",
+      "id": 0
+    }
+  ]
+}
+```
+**4.** Use GET - https://docker-ip:9000/api/Contents/
 
-Please ensure you follow the coding standards used through-out the existing
-code base. Some basic rules include:
-
- - all files must have the Apache license in the header.
- - indent with 4-spaces, no tabs. No arguments.
- - opening brace on same line as `if`/`for`/`function` and so on, closing brace
- on its own line.
-
- ## Attribution
-
- This Contributing article is adapted from node-red, version 0.16.2, available at https://github.com/node-red/node-red/blob/master/CODE_OF_CONDUCT.md
-
-# abhiyaantrikee - Contributor Covenant Code of Conduct
-
-## Our Pledge
-
-In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
-
-## Our Standards
-
-### Examples of behavior that contributes to creating a positive environment include:
-- Using welcoming and inclusive language
-- Being respectful of differing viewpoints and experiences
-- Gracefully accepting constructive criticism
-- Focusing on what is best for the community
-- Showing empathy towards other community members
-
-### Examples of unacceptable behavior by participants include:
-- The use of sexualized language or imagery and unwelcome sexual attention or advances
-- Trolling, insulting/derogatory comments, and personal or political attacks
-- Public or private harassment
-- Publishing others' private information, such as a physical or electronic address, without explicit permission
-- Other conduct which could reasonably be considered inappropriate in a professional setting
-
-## Our Responsibilities
-
-Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
-
-Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
-
-## Scope
-
-This Code of Conduct applies both within project spaces and in public spaces when an individual is representing the project or its community. Examples of representing a project or community include using an official project e-mail address, posting via an official social media account, or acting as an appointed representative at an online or offline event. Representation of a project may be further defined and clarified by project maintainers.
-
-## Enforcement
-
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at [INSERT EMAIL ADDRESS]. All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident. Further details of specific enforcement policies may be posted separately.
-
-Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of the project's leadership.
-
-## Attribution
-
-This Code of Conduct is adapted from the Contributor Covenant, version 1.4, available at http://contributor-covenant.org/version/1/4.
-
-[homepage]: http://contributor-covenant.org
-[version]: http://contributor-covenant.org/version/1/4/
+##### Note
+Currently, content-service is based on "in-memory" database. Databases (like MongoDB) integration would be provided in future releases.
+*** 
+Want to contribute to *content-service*? Please read CONTRIBUTING.md.
