@@ -24,10 +24,6 @@ Content as a Service (Caas) emphases essentially on content management without t
 * Content to be presented on highly customized UX
 * Content creation would be done programatically through APIs provided as Microservices.
 
-### Limitations of CaaS
-* Blogging sites where content is personal.
-* Huge effort and complex in case Content would be available only for one channel. There are cheaper and simple solutions are available than having CaaS.
-
 ## Project Badges
 
 * Build status: [![Build Status](https://travis-ci.org/abhiyaantrikee/content-service.svg)](https://travis-ci.org/abhiyaantrikee/content-service)
