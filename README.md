@@ -82,9 +82,11 @@ bob@doe.com : is an adming having admin role and have access to below URLs
 ```
 
 |HTTP METHOD | URL|
-| :-----------------------: |:---:|
-| **GET/POST/PUT/PATCH**                   |  https://docker-ip:9000/api/Contents/ | 
-Steps to get access token:
+| :-----------------------: | :---: |
+| **GET/POST/PUT/PATCH**|  https://docker-ip:9000/api/Contents/ |
+
+
+*Steps to get access token:*
 **1.** Use POST - https://docker-ip:9000/api/Users/login to get the access token.
 **Payload example:** 
 ```
