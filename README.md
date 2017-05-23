@@ -28,6 +28,11 @@ Content as a Service (Caas) emphases essentially on content management without t
 * Blogging sites where content is personal.
 * Huge effort and complex in case Content would be available only for one channel. There are cheaper and simple solutions are available than having CaaS.
 
+## Project Badges
+
+* Build status: [![Build Status](https://travis-ci.org/abhiyaantrikee/content-service.svg)](https://travis-ci.org/abhiyaantrikee/content-service)
+* License: [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/abhiyaantrikee/content-service/master/LICENSE)
+
 # Installation
  ### Docker
 [Docker](https://www.docker.com/) is a *pre-requisite* to build and start **content-service** application. Click here for [docker setup instructions](https://docs.docker.com/engine/installation/)
@@ -49,7 +54,6 @@ docker-compose up -d
 - content-service (Strongloop explorer): https://docker-ip:9000/explorer
 
 **[Win/Mac]**: For the ports to be accessible on localhost, add port-forwarding in virtualbox.
-
  
 # Content as a Service (CaaS) - API Details 
 | Content Management API (Admin)| Path| Description|
@@ -62,5 +66,13 @@ docker-compose up -d
 |Content Data API (Users) | Path| Description|
 | :-----------------------: |:---:|:---|
 | **GET**                   | */contents* | Retrieve Content ( using Filters and status=PUBLISHED and endDate > Current Date) |
+
+#### Usage
+content-service API`s are protected with ACL, in order to use the API we need to pass authorization(access) token in the request header.
+Steps to get access token:
+**1.** Use POST - https://docker-ip:9000/api/Users/login to get the access token.
+**Payload:** 
++ {"email": "john@doe.com", "password": "password"}
++ {"email": "bob@doe.com", "password": "password"}
 
 Want to contribute to *content-service*? Please read CONTRIBUTING.md.
