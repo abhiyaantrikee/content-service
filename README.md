@@ -87,6 +87,7 @@ bob@doe.com : is an adming having admin role and have access to below URLs
 
 
 *Steps to get access token:*
+
 **1.** Use POST - https://docker-ip:9000/api/Users/login to get the access token.
 **Payload example:** 
 ```
