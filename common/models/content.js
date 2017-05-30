@@ -160,7 +160,23 @@ module.exports = function(Content) {
     * @param {Content} result Result object
     */
     Content.updateWorkflow = function(content, callback) {
-        //TODO: Need to provide the implementation
+        debug('Inside updateWorkflow method');
+        try{
+            var data = {};
+            data.workflowList = content.workflowList;
+            Content.app.models.Content.upsertWithWhere({'id': content.id}, data, function(err,result){
+                if(result){
+                    debug('Successfully updated WorkFlow');
+                    return callback(null, result);
+                }else{
+                    debug('Error occured while updating WorkFlow', err);
+                    callback(err);
+                }
+            });
+        }catch(error){
+            debug('Error occured while updating WorkFlow', error);
+            callback(error);
+        }
     }
 
     //REMOTE METHOD DEFINITION
