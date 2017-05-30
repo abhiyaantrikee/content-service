@@ -45,6 +45,6 @@ gulp.task('mochaTest', function (cb) {
     });
 });
 
-gulp.task('default', ['shrinkwrap','nsp','mochaTest'], function() {});
+gulp.task('default', ['shrinkwrap','nsp'], function() {});
 
 gulp.task('build', ['default']);
