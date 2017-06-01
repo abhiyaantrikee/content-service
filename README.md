@@ -30,7 +30,7 @@ Content as a Service (Caas) emphases essentially on content management without t
 * License: [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/abhiyaantrikee/content-service/master/LICENSE)
 
 # High Level Component Architecture (Generic)
-(https://github.com/abhiyaantrikee/content-service/blob/master/docs/component.png)
+![](https://github.com/abhiyaantrikee/content-service/blob/master/docs/component.png)
 # Installation
 ### Docker
 [Docker](https://www.docker.com/) is a *pre-requisite* to build and start **content-service** application. Click here for [docker setup instructions](https://docs.docker.com/engine/installation/)
