@@ -29,6 +29,8 @@ Content as a Service (Caas) emphases essentially on content management without t
 * Build status: [![Build Status](https://travis-ci.org/abhiyaantrikee/content-service.svg)](https://travis-ci.org/abhiyaantrikee/content-service)
 * License: [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/abhiyaantrikee/content-service/master/LICENSE)
 
+# High Level Component Architecture (Generic)
+(https://github.com/abhiyaantrikee/content-service/blob/master/docs/component.png)
 # Installation
 ### Docker
 [Docker](https://www.docker.com/) is a *pre-requisite* to build and start **content-service** application. Click here for [docker setup instructions](https://docs.docker.com/engine/installation/)
@@ -139,4 +141,4 @@ bob@doe.com : is an adming having admin role and have access to below URLs
 ##### Note
 Currently, content-service is based on "in-memory" database. Databases (like MongoDB) integration would be provided in future releases.
 *** 
-Want to contribute to *content-service*? Please read CONTRIBUTING.md.
+Want to contribute to *content-service*? Please read [CONTRIBUTING](https://github.com/abhiyaantrikee/content-service/blob/master/CONTRIBUTING.md).
