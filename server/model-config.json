@@ -14,7 +14,7 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "mongoDs"
   },
   "AccessToken": {
     "dataSource": "db",
@@ -36,11 +36,11 @@
     "public": false
   },
   "Content": {
-    "dataSource": "db",
+    "dataSource": "mongoDs",
     "public": true
   },
   "WorkFlow": {
-    "dataSource": "db",
+    "dataSource": "mongoDs",
     "public": false
   }
 }

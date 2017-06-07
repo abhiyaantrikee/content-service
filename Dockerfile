@@ -1,21 +1,23 @@
-# Node v7 as the base image to support ES6
-FROM node:7.2.0
+FROM node:6-alpine
 
 MAINTAINER Ashutosh Ranjan "ashutoshranjan.33@gmail.com"
 
-# Create a new user to our new container and avoid the root user
-RUN useradd --user-group --create-home --shell /bin/false nupp && \
-    apt-get clean
-ENV HOME=/home/nupp
-COPY . $HOME/app/
-RUN chown -R nupp:nupp $HOME/* /usr/local/
-WORKDIR $HOME/app
-RUN npm cache clean && \
-    npm install --silent --progress=false --development
+RUN npm config set loglevel warn
+ADD package.json /tmp/package.json
+RUN cd /tmp && npm cache clean && npm install
 
-RUN chown -R nupp:nupp $HOME/*
-USER nupp
+# Home directory for content-service application
+RUN mkdir /home/content-service
+WORKDIR /home/content-service
 
-EXPOSE 9000
+RUN cp -a /tmp/node_modules /home/content-service
+ADD . /home/content-service
 
-CMD ["npm", "start"]
+
+RUN addgroup content-service \
+    && adduser -h /home/content-service -s /bin/sh -D -G content-service content-service \
+    && mkdir /data \
+    && chown -R content-service:content-service /data \
+    && chown -R content-service:content-service /home/content-service
+
+USER content-service

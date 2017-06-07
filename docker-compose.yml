@@ -1,10 +1,25 @@
 version: '2'
 services:
+  MongoDB:
+    user: root
+    image: mongo:latest
+    container_name: mongo_db
+    restart: always
+    command: ["mongod", "--smallfiles"]
+    hostname: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/db:/data/db:rw
   node:
     user: root
     build: .
     ports:
       - "9000:9000"
     container_name: content-service
+    volumes:
+       - "./data:/home/content-service/data"
+    depends_on:
+      - MongoDB
     command: ["npm", "start"]
 
