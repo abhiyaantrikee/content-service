@@ -1,0 +1,1 @@
+This would cater to MongoDB as independent of application.

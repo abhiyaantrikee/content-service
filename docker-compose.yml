@@ -11,9 +11,9 @@ services:
       - "27017:27017"
     volumes:
       - ./data/db:/data/db:rw
-  node:
+  content-service:
     user: root
-    build: .
+    build: ./content/.
     ports:
       - "9000:9000"
     environment:
