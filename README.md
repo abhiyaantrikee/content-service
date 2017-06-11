@@ -74,6 +74,7 @@ Before getting the `Access Token` we need to create the following using the APIs
 * RoleMapping
 
 There are various APIs which are available and would be leveraged to perform the above mentioned actions.
+
 |HTTP METHOD | URI | DESCRIPTION| SAMPLE REQUEST | SAMPLE RESPONSE
 |:---:|:---:|:---|:---|:---|
 | **POST**| /api/Users|This would create a USER in Database|``` {"username": "bob","email": "bob@test.com","password":"123"}```|```{"username": "bob","email": "bob@test.com","id": "593d993f5387fd000f6e066b"}```|
