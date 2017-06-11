@@ -6,9 +6,14 @@ var supertest = require('supertest')(app);
 var chai = require('chai');
 var should = chai.should();
 var expect = chai.expect;
-
+var authorization = require('./test-utils/authorization')
 
 describe('Content service test cases', function(){
+	before(function(done){
+		console.log('inside before hook...');
+		authorization.createUserAndMapping();
+		done();
+	});
 	describe('Create and update content test cases', function(){
 		var authorization;
 

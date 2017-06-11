@@ -14,7 +14,8 @@
     ]
   },
   "User": {
-    "dataSource": "mongoDs"
+    "dataSource": "db",
+        "public": true
   },
   "AccessToken": {
     "dataSource": "db",
@@ -26,21 +27,21 @@
   },
   "RoleMapping": {
     "dataSource": "db",
-    "public": false,
+    "public": true,
     "options": {
       "strictObjectIDCoercion": true
     }
   },
   "Role": {
     "dataSource": "db",
-    "public": false
+    "public": true
   },
   "Content": {
-    "dataSource": "mongoDs",
+    "dataSource": "db",
     "public": true
   },
   "WorkFlow": {
-    "dataSource": "mongoDs",
+    "dataSource": "db",
     "public": false
   }
 }

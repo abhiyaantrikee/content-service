@@ -16,6 +16,8 @@ services:
     build: .
     ports:
       - "9000:9000"
+    environment:
+      - NODE_ENV=dev
     container_name: content-service
     volumes:
        - "./data:/home/content-service/data"
