@@ -4,6 +4,7 @@
 var Promise = require('bluebird');
 var errorUtils = require('../utils/errorUtils');
 var debug = require('debug') ('content');
+var errorCodes = require('../utils/errorCodes');
 module.exports = function(Content) {
     Content.disableRemoteMethod('find', true);
 	Content.disableRemoteMethod('exists', true);
@@ -78,7 +79,7 @@ module.exports = function(Content) {
 		}
 		else {
 			if ((existingContent.length > 0) && (content.version === undefined || content.version === null || content.version === '')) {
-				callback(errorUtils.populateError(new Error(), errorCodes.Content.createContent.CNT100));
+				callback(errorUtils.populateError(new Error(), errorCodes.createContent.CNT100));
 			}
 			else {
 				var docVersion = existingContent[0].version;

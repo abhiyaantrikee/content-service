@@ -14,7 +14,7 @@ describe('Content service test cases', function(){
 		authorization.createUserAndMapping();
 		done();
 	});
-	describe('Create and update content test cases', function(){
+	describe('Create content test cases', function(){
 		var authorization;
 
 		before(function(done){
@@ -66,6 +66,57 @@ describe('Content service test cases', function(){
 					}
 				});
 		});
+		it('it should throw undefined version error while creating content', function(done){
+			var createContentRequest = {
+				"id": 1,
+				"title": "sample",
+				"workflowList": [
+					{
+					  "userName": "content"
+					}
+				],
+				"version":undefined
+			}
+			supertest.post('/api/Contents')
+				.set('Content-Type', 'application/json')
+            	.set('Authorization', authorization)
+				.expect(500)
+				.send(createContentRequest)
+				.end(function(err, res){
+					if (err) {
+						throw err;
+					} else {
+						res.status.should.equal(500);
+						expect(res.body).to.have.a.property('error');
+						done();
+					}
+				});
+		});
+		it('it should throw error while creating content', function(done){
+			var createContentRequest = {
+				"id": 1,
+				"title": "sample",
+				"workflowList": [
+					{
+					  "userName": "content"
+					}
+				]
+			}
+			supertest.post('/api/Contents')
+				.set('Content-Type', 'application/json')
+            	.set('Authorization', authorization)
+				.expect(500)
+				.send(createContentRequest)
+				.end(function(err, res){
+					if (err) {
+						throw err;
+					} else {
+						res.status.should.equal(500);
+						expect(res.body).to.have.a.property('error');
+						done();
+					}
+				});
+		});
 
 		it('it should not create content successfully', function(done){
 			var createContentRequest = {
@@ -91,16 +142,43 @@ describe('Content service test cases', function(){
 					}
 				});
 		});
+	});
 
+	describe('Update content test cases', function(){
+		var authorization;
+		before(function(done){
+			var userCredentials = {
+				"email" : "bob@doe.com", 
+				"password": "password"
+			}
+			supertest.post('/api/Users/login')
+				.expect(200)
+				.send(userCredentials)
+				.end(function(err, res){
+					if (err) {
+						throw err;
+					} else {
+						authorization = res.body.id;
+						res.status.should.equal(200);
+						expect(res.body).to.have.a.property('id');
+						done();
+					}
+				});
+		});
+
+		after(function(done){
+			done();
+		});
 		it('it should Update content successfully', function(done){
 			var updateContentRequest = {
 				"id": 1,
-				"title": "sampleUpdated",
+				"title": "sample",
 				"workflowList": [
 					{
 					  "userName": "content"
 					}
-				]
+				],
+				"version":"1.0"
 			}		
 			supertest.put('/api/Contents')
 				.set('Content-Type', 'application/json')
@@ -117,7 +195,57 @@ describe('Content service test cases', function(){
 					}
 				});
 		});
+		it('it should throw error for undefined version while updating content', function(done){
+			var updateContentRequest = {
+				"id": 1,
+				"title": "sample",
+				"workflowList": [
+					{
+					  "userName": "content"
+					}
+				]
+			}		
+			supertest.put('/api/Contents')
+				.set('Content-Type', 'application/json')
+            	.set('Authorization', authorization)
+				.expect(500)
+				.send(updateContentRequest)
+				.end(function(err, res){
+					if (err) {
+						throw err;
+					} else {
+						res.status.should.equal(500);
+						expect(res.body).to.have.a.property('error');
+						done();
+					}
+				});
+		});
+	});
+	describe('Update workflow test cases', function(){
+		var authorization;
+		before(function(done){
+			var userCredentials = {
+				"email" : "bob@doe.com", 
+				"password": "password"
+			}
+			supertest.post('/api/Users/login')
+				.expect(200)
+				.send(userCredentials)
+				.end(function(err, res){
+					if (err) {
+						throw err;
+					} else {
+						authorization = res.body.id;
+						res.status.should.equal(200);
+						expect(res.body).to.have.a.property('id');
+						done();
+					}
+				});
+		});
 
+		after(function(done){
+			done();
+		});
 		it('it should Update workflowList successfully', function(done){
 			var updateWorkflowRequest = {
 				"id": 1,
@@ -187,7 +315,20 @@ describe('Content service test cases', function(){
 					}
 				});
 		});
-
+		it('it should return error while fetching content', function(done){
+			supertest.get('/api/Contents?filter=%%')
+				.set('Content-Type', 'application/json')
+            	.set('Authorization', authorization)
+				.expect(400)
+				.end(function(err, res){
+					if (err) {
+						throw err;
+					} else {
+						res.status.should.equal(400);
+						done();
+					}
+				});
+		});
 		it('it should not find all content successfully', function(done){
 			var authorization = 'yAHJhjkHA';
 			supertest.get('/api/Contents')
