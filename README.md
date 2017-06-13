@@ -140,4 +140,8 @@ Once the USER, ROLE and ROLE MAPPING is created, ACCESS TOKEN would be generated
 ##### Note
 MongoDB is used as a database. Currently, it is part of same docker as of application. This would change in future release and would be independent of application (to be inline with the architecture).
 *** 
+##### MAINTAINER/CONTRIBUTOR
+Amerish Kesar : amerishk@gmail.com
+Ashutosh Ranjan : ashutoshranjan.33@gmail.com
+
 Want to contribute to *content-service*? Please read [CONTRIBUTING](https://github.com/abhiyaantrikee/content-service/blob/master/CONTRIBUTING.md).

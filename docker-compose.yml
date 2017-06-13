@@ -18,6 +18,7 @@ services:
       - "9000:9000"
     environment:
       - NODE_ENV=dev
+      - DEBUG=content.js
     container_name: content-service
     volumes:
        - "./data:/home/content-service/data"
