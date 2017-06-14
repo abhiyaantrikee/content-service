@@ -1,5 +1,7 @@
+var app = require('../../server/server');
 var debug = require('debug') ('authorization');
-module.exports = function(app) {
+exports.createUserAndMapping = function(){
+console.log('inside createUserAndMapping...');
     var promise = require('bluebird');
     var User = app.models.User;
     var Role = app.models.Role;
@@ -14,10 +16,10 @@ module.exports = function(app) {
         }else{
             debug('Users created successfully');
             var role = [{
-                name:'consumer',
+                name:'read',
                 userId:users[0].id
             },{
-                name:'admin',
+                name:'write',
                 userId:users[1].id
             }];
             role.forEach(function(role){
@@ -26,24 +28,27 @@ module.exports = function(app) {
         }
 
     });
-
     function createRoleAndMapping(roleName,userId){
         Role.create({
-                name: roleName
-                }, function(err, role) {
-                if (err) throw err;
-                debug('Role created successfully');
-                debug('Created role:', role);
+            name: roleName
+            }, function(err, role) {
+            if (err) throw err;
+            debug('Role created successfully');
+            debug('Created role:', role);
 
-                //make bob an admin
-                role.principals.create({
-                    principalType: RoleMapping.USER,
-                    principalId: userId
-                }, function(err, principal) {
-                    if (err) throw err;
-                    debug('Principle mapping done successfully');
-                    debug('Created principal:', principal);
-                });
+            //make bob an admin
+            role.principals.create({
+                principalType: RoleMapping.USER,
+                principalId: userId
+            }, function(err, principal) {
+                if (err) throw err;
+                debug('Principle mapping done successfully');
+                debug('Created principal:', principal);
             });
+        });
     }
-}
+};
+
+
+  
+

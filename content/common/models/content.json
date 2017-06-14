@@ -120,37 +120,37 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "consumer",
+      "principalId": "read",
       "permission": "ALLOW",
       "property": "findAllContent"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "admin",
-      "permission": "ALLOW",
-      "property": "createContent"
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "admin",
+      "principalId": "write",
       "permission": "ALLOW",
       "property": "findAllContent"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "admin",
+      "principalId": "write",
       "permission": "ALLOW",
       "property": "updateContent"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "admin",
+      "principalId": "write",
       "permission": "ALLOW",
       "property": "updateWorkflow"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "write",
+      "permission": "ALLOW",
+      "property": "createContent"
     }
   ],
   "methods": {}

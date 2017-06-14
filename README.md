@@ -67,29 +67,28 @@ docker-compose up -d
 
 ### Usage
 content-service API`s are protected with ACL, in order to use the API we need to pass authorization(access) token in the request header.
-There are two Users having different role and access:
-```
-john@doe.com : is an enduser having consumer role and have access to below URL
-```
-|HTTP METHOD | URL|
-| :-----------------------: |:---:|
-| **GET**                   |  https://docker-ip:9000/api/Contents/ | 
 
-```
-bob@doe.com : is an adming having admin role and have access to below URLs
-```
+Before getting the `Access Token` we need to create the following using the APIs
+* User
+* Role
+* RoleMapping
 
-|HTTP METHOD | URL|
-| :-----------------------: | :---: |
-| **GET/POST/PUT/PATCH**|  https://docker-ip:9000/api/Contents/ |
+There are various APIs which are available and would be leveraged to perform the above mentioned actions.
 
+|HTTP METHOD | URI | DESCRIPTION| SAMPLE REQUEST | SAMPLE RESPONSE
+|:---:|:---:|:---|:---|:---|
+| **POST**| /api/Users|This would create a USER in Database|``` {"username": "bob","email": "bob@test.com","password":"123"}```|```{"username": "bob","email": "bob@test.com","id": "593d993f5387fd000f6e066b"}```|
+| **POST**| /api/Roles|This would create a ROLE in Database|```{"name": "write"}```|``` {"id": "593d99825387fd000f6e066d","name": "write","created":"2017-06-11T19:26:58.337Z","modified": "2017-06-11T19:26:58.337Z"}```|
+| **POST**| /api/RoleMappings|This would create a MAPPING between USER and ROLE in Database|```{"principalType": "USER","principalId":"593d993f5387fd000f6e066b","roleId": "593d99825387fd000f6e066d"}```|``` {"id": "593d99b95387fd000f6e066e","principalType": "USER","principalId": "593d993f5387fd000f6e066b","roleId": "593d99825387fd000f6e066d"}```|
+
+Once the USER, ROLE and ROLE MAPPING is created, ACCESS TOKEN would be generated as below:
 
 *Steps to get access token:*
 
 **1.** Use POST - https://docker-ip:9000/api/Users/login to get the access token.
 **Payload example:** 
 ```
-{"email": "john@doe.com", "password": "password"}
+{"email": "bob@test.com", "password": "123"}
 ```
 
 **Response**
@@ -139,6 +138,10 @@ bob@doe.com : is an adming having admin role and have access to below URLs
 **4.** Use GET - https://docker-ip:9000/api/Contents/
 
 ##### Note
-Currently, content-service is based on "in-memory" database. Databases (like MongoDB) integration would be provided in future releases.
+MongoDB is used as a database. Currently, it is part of same docker as of application. This would change in future release and would be independent of application (to be inline with the architecture).
 *** 
+##### MAINTAINER/CONTRIBUTOR
+Amerish Kesar : amerishk@gmail.com
+Ashutosh Ranjan : ashutoshranjan.33@gmail.com
+
 Want to contribute to *content-service*? Please read [CONTRIBUTING](https://github.com/abhiyaantrikee/content-service/blob/master/CONTRIBUTING.md).
