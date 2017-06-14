@@ -88,7 +88,7 @@ Once the USER, ROLE and ROLE MAPPING is created, ACCESS TOKEN would be generated
 **1.** Use POST - https://docker-ip:9000/api/Users/login to get the access token.
 **Payload example:** 
 ```
-{"email": "bob@doe.com", "password": "123"}
+{"email": "bob@test.com", "password": "123"}
 ```
 
 **Response**
