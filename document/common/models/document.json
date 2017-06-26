@@ -1,0 +1,17 @@
+{
+  "name": "Document",
+  "base": "Model",
+  "strict":"true",
+  "properties": {
+    "document": {
+      "type": "string",
+      "description": "Content/Document as bytes",
+      "format": "byte"
+    }
+  },
+  "validations": [],
+  "relations": {},
+   "methods": {},
+  "acls": [],
+  "http" : {"path" : "/staticdocument"}
+}

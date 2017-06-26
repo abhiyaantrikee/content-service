@@ -136,25 +136,27 @@ module.exports = function(Content) {
     }
     //REMOTE METHOD DEFINITION
     Content.remoteMethod('updateContent',
-    { isStatic: true,
-    produces: [ 'application/json' ],
-    accepts: 
-    [ { arg: 'content',
-        type: 'Content',
-        description: '',
-        required: true,
-        http: { source: 'body' } } ],
-    returns: 
-    [ { description: 'Successful Response',
-        type: 'Content',
-        arg: 'data',
-        root: true } ],
-    http: { verb: 'put', path: '/' },
-    description: 'Update the Content.\n' }
+    { 
+        isStatic: true,
+        produces: [ 'application/json' ],
+        accepts: 
+        [ { arg: 'content',
+            type: 'Content',
+            description: '',
+            required: true,
+            http: { source: 'body' } } ],
+        returns: 
+        [ { description: 'Successful Response',
+            type: 'Content',
+            arg: 'data',
+            root: true } ],
+        http: { verb: 'put', path: '/' },
+        description: 'Update the Content.\n' 
+    }
     );
 
     /**
-     * Updates WorkFlow of the content.
+    * Updates WorkFlow of the content.
     * @param {Content} content 
     * @callback {Function} callback Callback function
     * @param {Error|string} err Error object
@@ -182,21 +184,23 @@ module.exports = function(Content) {
 
     //REMOTE METHOD DEFINITION
     Content.remoteMethod('updateWorkflow',
-    { isStatic: true,
-    produces: [ 'application/json' ],
-    accepts: 
-    [ { arg: 'content',
-        type: 'Content',
-        description: '',
-        required: true,
-        http: { source: 'body' } } ],
-    returns: 
-    [ { description: 'Successful Response',
-        type: 'Content',
-        arg: 'data',
-        root: true } ],
-    http: { verb: 'patch', path: '/' },
-    description: 'Updates WorkFlow of the content.\n' }
+    { 
+        isStatic: true,
+        produces: [ 'application/json' ],
+        accepts: 
+        [ { arg: 'content',
+            type: 'Content',
+            description: '',
+            required: true,
+            http: { source: 'body' } } ],
+        returns: 
+        [ { description: 'Successful Response',
+            type: 'Content',
+            arg: 'data',
+            root: true } ],
+        http: { verb: 'patch', path: '/' },
+        description: 'Updates WorkFlow of the content.\n' 
+    }
     );
 
     /**

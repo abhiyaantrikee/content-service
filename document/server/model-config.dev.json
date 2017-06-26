@@ -1,0 +1,20 @@
+{
+  "User": {
+    "dataSource": "mongoDs"
+  },
+  "AccessToken": {
+    "dataSource": "mongoDs"
+  },
+  "ACL": {
+    "dataSource": "mongoDs"
+  },
+  "RoleMapping": {
+    "dataSource": "mongoDs"
+  },
+  "Role": {
+    "dataSource": "mongoDs"
+  },
+  "Document": {
+    "dataSource": "db"
+  }
+}

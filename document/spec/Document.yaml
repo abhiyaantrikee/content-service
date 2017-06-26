@@ -1,0 +1,74 @@
+################################################################################
+# Specification: Document Canonical Model
+# Project: document-service
+# Description: Swagger Specification for Documents Canonical Model
+# Version: 0.1.0
+################################################################################
+swagger: '2.0'
+
+# Document Model Meta information
+info:
+  title: Document Canonical Model Specification
+  description: |
+    ```
+      Current Status Baseline Version
+    ```
+    Canonical Model Specification for Document
+
+  version: "0.1.0"
+
+definitions:
+
+  Error:
+    type: object
+    description: This error model inherits default error object
+    properties:
+      message:
+        type: string
+        description: default error object attribute
+      statusCode:
+        type: string
+        description: default error object attribute
+      errorCode:
+        type: string
+        description: Error Code
+        format: integer
+
+paths:
+  /staticdocument/{docURL}/{fileName}:
+    get:
+      tags:
+        - Document
+      operationId: findDocumentByUrl
+      description: |
+        Retrieves the document based on the document URL.
+      parameters:
+        - name: docURL
+          in: path
+          description: document URL
+          required: true
+          type: string
+        - name: fileName
+          in: path
+          description: file Name
+          required: true
+          type: string
+        - name: accesstoken
+          in: header
+          description: access token
+          required: true
+          type: string
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: string
+            format: byte
+        400:
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Error Response
+          schema:
+            $ref: '#/definitions/Error'

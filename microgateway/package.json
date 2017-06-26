@@ -1,0 +1,24 @@
+{
+  "name": "gateway-service",
+  "version": "0.1.0",
+  "main": "server/server.js",
+  "engines": {
+    "node": ">=6"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "start": "node ."
+  },
+  "dependencies": {
+      "microgateway":"^1.6.1",
+       "yamljs": "^0.2.4"
+  },
+  "devDependencies": {
+  },
+  "repository": {
+    "type": "",
+    "url": ""
+  },
+  "license": "UNLICENSED",
+  "description": "Gateway Service"
+}
