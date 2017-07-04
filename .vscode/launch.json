@@ -12,7 +12,9 @@
             "program": "${workspaceRoot}/microgateway/server/server.js",
             "env": {
                 "NODE_ENV": "production",
-                "CONFIG_DIR": "./microgateway/definitions"
+                "CONFIG_DIR": "./microgateway/definitions",
+                "PORT": "9000",
+                "TLS_SERVER_CONFIG": "${workspaceRoot}/microgateway/config/tlsconfig.json"
             }
         }
         // {

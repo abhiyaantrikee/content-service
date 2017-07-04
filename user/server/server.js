@@ -46,5 +46,5 @@ boot(app, __dirname, function(err) {
   // start the server if `$ node server.js`
   if (require.main === module)
     app.start();
-    console.log('CONTENT SERVICE STARTED ********************* ');
+    console.log('USER SERVICE STARTED ********************* ');
 });

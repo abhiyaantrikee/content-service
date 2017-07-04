@@ -25,6 +25,7 @@
 
 //----------------------------------------------
 var mg = require('microgateway/lib/microgw');
-mg.start(3000);
+console.log('PORT->', process.env.PORT);
+mg.start(process.env.PORT);
 console.log('STARTED GATEWAY ********************* ');
 //----------------------------------------------

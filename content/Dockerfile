@@ -1,8 +1,8 @@
-FROM node:6-alpine
+FROM node:8-alpine
 
 RUN npm config set loglevel debug
 ADD package.json /tmp/package.json
-RUN cd /tmp && npm cache clean && npm install
+RUN cd /tmp && npm cache verify && npm install
 
 # Home directory for content-service application
 RUN mkdir /home/content-service
