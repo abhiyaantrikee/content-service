@@ -25,5 +25,8 @@
   "sslConfig": {
     "privateKey": "./ssl/server.key",
     "certificate": "./ssl/server.crt"
+  },
+  "documentsConfig": {
+    "createUrl": "http://localhost:9002/api/Documents/"
   }
 }

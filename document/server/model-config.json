@@ -15,7 +15,7 @@
   },
   "User": {
     "dataSource": "db",
-        "public": true
+    "public": true
   },
   "AccessToken": {
     "dataSource": "db",
@@ -37,7 +37,7 @@
     "public": true
   },
   "Document": {
-    "dataSource": "db",
+    "dataSource": "storage",
     "public": true
   }
 }

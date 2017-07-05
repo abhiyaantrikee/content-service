@@ -18,41 +18,42 @@ info:
   version: "0.1.0"
 
 definitions:
-
-  Error:
+  Document:
+    description: Document Entity which contains the parameters for the document
     type: object
-    description: This error model inherits default error object
     properties:
-      message:
+      version:
         type: string
-        description: default error object attribute
-      statusCode:
+        description: version of the document
+      feature:
         type: string
-        description: default error object attribute
-      errorCode:
+        description: feature of the content which is used to create container
+      name:
         type: string
-        description: Error Code
-        format: integer
+        description: name of the document
+      document:
+        type: string
+        format: byte
+        description: binary content of the document
 
 paths:
-  /staticdocument/{docURL}/{fileName}:
-    get:
+  /create:
+    post:
       tags:
         - Document
-      operationId: findDocumentByUrl
+      operationId: createDocument
       description: |
-        Retrieves the document based on the document URL.
+        Create document based on bytes recieved in payload.
+      consumes:
+        - application/json
       parameters:
-        - name: docURL
-          in: path
-          description: document URL
+        - name: content
+          in: body
+          description: |
+            the Content to be created.
           required: true
-          type: string
-        - name: fileName
-          in: path
-          description: file Name
-          required: true
-          type: string
+          schema:
+            $ref: '#/definitions/Document'
         - name: accesstoken
           in: header
           description: access token
@@ -62,13 +63,15 @@ paths:
         200:
           description: Successful response
           schema:
-            type: string
-            format: byte
+            type: object
+            description: Document information.
         400:
           description: Validation Error
           schema:
-            $ref: '#/definitions/Error'
+            type: object
+            description: Error Object.
         500:
           description: Error Response
           schema:
-            $ref: '#/definitions/Error'
+            type: object
+            description: Error Object.

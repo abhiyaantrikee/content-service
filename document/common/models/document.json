@@ -1,17 +1,31 @@
 {
   "name": "Document",
-  "base": "Model",
-  "strict":"true",
+  "base": "PersistedModel",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
   "properties": {
+    "version":{
+      "type": "string",
+      "description": "version of the document"
+    },
+    "feature":{
+      "type": "string",
+      "description": "feature of the content which is used to create container"
+    },
+    "name": {
+      "type": "string",
+      "description": "name of the document"
+    },
     "document": {
       "type": "string",
-      "description": "Content/Document as bytes",
+      "description": "binary content of the document",
       "format": "byte"
     }
   },
   "validations": [],
   "relations": {},
-   "methods": {},
   "acls": [],
-  "http" : {"path" : "/staticdocument"}
+  "methods": {}
 }
