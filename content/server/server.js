@@ -13,7 +13,6 @@ app.start = function(cb) {
   // start the web server
   var sslConfig = app.get('sslConfig');
   var httpOnly = app.get('httpOnly');
-  //httpOnly = true;
   var server=null;
   if(!httpOnly){
     var options = {

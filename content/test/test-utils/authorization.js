@@ -1,11 +1,12 @@
 var app = require('../../server/server');
 var debug = require('debug') ('authorization');
 exports.createUserAndMapping = function(){
-console.log('inside createUserAndMapping...');
+debug('inside createUserAndMapping...');
     var promise = require('bluebird');
     var User = app.models.User;
     var Role = app.models.Role;
     var RoleMapping = app.models.RoleMapping;
+    
     User.create([
         {username: 'John', email: 'john@doe.com', password: 'password'},
         {username: 'Bob', email: 'bob@doe.com', password: 'password'},
@@ -32,7 +33,9 @@ console.log('inside createUserAndMapping...');
         Role.create({
             name: roleName
             }, function(err, role) {
-            if (err) throw err;
+            if (err) {
+                throw err;
+            }
             debug('Role created successfully');
             debug('Created role:', role);
 

@@ -29,6 +29,7 @@ module.exports = function(Document) {
     Document.disableRemoteMethod('uploadStream', true);
     Document.disableRemoteMethod('downloadStream', true);
     Document.disableRemoteMethod('destroyContainer', true);
+	Document.disableRemoteMethod('upload', true);
     /**
      * Call /:container/upload to create a document in container
      * @param {*} content 

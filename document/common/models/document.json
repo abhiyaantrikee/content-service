@@ -26,6 +26,48 @@
   },
   "validations": [],
   "relations": {},
-  "acls": [],
+  "acls": [
+        {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "read",
+      "permission": "ALLOW",
+      "property": "download"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "write",
+      "permission": "ALLOW",
+      "property": "createDocument"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "read",
+      "permission": "ALLOW",
+      "property": "download"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW",
+      "property": "createDocument"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW",
+      "property": "down"
+    }
+  ],
   "methods": {}
 }
