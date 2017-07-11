@@ -27,6 +27,6 @@
     "certificate": "./ssl/server.crt"
   },
   "documentsConfig": {
-    "createUrl": "http://localhost:9002/api/Documents/"
+    "createUrl": "https://localhost:9002/api/Documents/"
   }
 }

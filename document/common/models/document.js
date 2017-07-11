@@ -3,6 +3,7 @@ var request = require('request');
 var crypto = require('crypto');
 var uuid = require('uuid');
 var fs = require('fs');
+var debug = require('debug')('document');
 module.exports = function(Document) {
     Document.disableRemoteMethod('exists', true);
 	Document.disableRemoteMethod('findOne', true);
@@ -29,22 +30,27 @@ module.exports = function(Document) {
     Document.disableRemoteMethod('uploadStream', true);
     Document.disableRemoteMethod('downloadStream', true);
     Document.disableRemoteMethod('destroyContainer', true);
-	Document.disableRemoteMethod('upload', true);
     /**
      * Call /:container/upload to create a document in container
      * @param {*} content 
      * @param {*} data 
      * @param {*} callback 
      */
-    function callRestAPI(content, data, callback){
+    function callRestAPI(document, accesstoken, data, callback){
+        debug('inside call rest api.... *********************************************** ');
         var docConfig = Document.app.get('documentsConfig');
-        var url = docConfig.createUrl+ data.name + '/upload'
+        var url = docConfig.createUrl+ data.name + '/upload';
+        debug('inside call URI .... *********************************************** ', url);
         var req = request.post({
             url:url,
+            qs:{
+                'access_token': accesstoken.access_token
+            },
             headers:{
                 'Content-Type':'multipart/form-data'
             }
         }, function(err, response, body){
+            debug('Rest api.... *********************************************** ',err, response,body);
             if(err){
                 callback(err);
             }else{
@@ -52,7 +58,7 @@ module.exports = function(Document) {
             }
         });
         var form = req.form();
-        form.append('file', new Buffer(content.document), {filename: content.name});
+        form.append('file', new Buffer(document.document), {filename: document.name+"_v"+document.version});
     }
     /**
      * Create document based on bytes recieved in payload.
@@ -62,22 +68,24 @@ module.exports = function(Document) {
     * @param {Error|string} err Error object
     * @param {any} result Result object
     */
-    Document.createDocument = function(content, accesstoken, callback) {
-        var container = content.feature + '-'+ content.version
-        Document.getContainer(container, function(err, data){
+    Document.createDocument = function(document, access_token, callback) {
+        //var container = content.feature + '-'+ content.version
+        Document.getContainer(document.feature, function(err, data){
+            debug('inside createDocument api.... *********************************************** ',err, data);
             if(err && err.code === 'ENOENT'){
                 var options = {
-                    name: container
+                    name: document.feature
                 }
                 Document.createContainer(options, function(err, data){
+                    debug('inside create container api.... *********************************************** ',err, data);
                     if(err){
                         callback(err);
                     }else{
-                        callRestAPI(content, data, callback);
+                        callRestAPI(document, access_token, data, callback);
                     }
                 })
             } else {
-                callRestAPI(content, data, callback);
+                callRestAPI(document, access_token, data, callback);
             }
         });
     }
@@ -87,16 +95,23 @@ module.exports = function(Document) {
     consumes: [ 'application/json' ],
     produces: [ 'application/json' ],
     accepts: 
-    [ { arg: 'content',
+    [ { arg: 'document',
         type: 'Document',
         description: 'the Content to be created.\n',
         required: true,
         http: { source: 'body' } },
-        { arg: 'accesstoken',
-        type: 'string',
+        { arg: 'access_token',
+        type: 'object',
         description: 'access token',
         required: true,
-        http: { source: 'header' } } ],
+        http: function(ctx){
+            
+            var param={};
+            var req = ctx.req;
+            param.access_token = req.query.access_token;
+            debug('ACCESS_TOKEN $$$$$$$$$$$$$$$$$$$$$$$$$$$$$', param.access_token);
+            return param;
+        } } ],
     returns: [
         { description: 'Successful Response',
         type: 'Object',

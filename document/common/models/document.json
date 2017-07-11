@@ -1,10 +1,6 @@
 {
   "name": "Document",
-  "base": "PersistedModel",
-  "idInjection": false,
-  "options": {
-    "validateUpsert": true
-  },
+  "base": "Model",
   "properties": {
     "version":{
       "type": "string",
@@ -27,7 +23,7 @@
   "validations": [],
   "relations": {},
   "acls": [
-        {
+     {
       "accessType": "*",
       "principalType": "ROLE",
       "principalId": "$everyone",
@@ -36,9 +32,9 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "read",
+      "principalId": "write",
       "permission": "ALLOW",
-      "property": "download"
+      "property": "upload"
     },
     {
       "accessType": "EXECUTE",
@@ -50,23 +46,16 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "read",
+      "principalId": "write",
       "permission": "ALLOW",
       "property": "download"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "admin",
+      "principalId": "read",
       "permission": "ALLOW",
-      "property": "createDocument"
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "admin",
-      "permission": "ALLOW",
-      "property": "down"
+      "property": "download"
     }
   ],
   "methods": {}

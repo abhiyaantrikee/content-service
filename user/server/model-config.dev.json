@@ -1,22 +1,22 @@
 {
   "User": {
     "dataSource": "userMongoDs",
-    "public": false
+    "public": true
   },
   "AccessToken": {
     "dataSource": "userMongoDs",
-    "public": false
+    "public": true
   },
   "ACL": {
     "dataSource": "userMongoDs",
-    "public": false
+    "public": true
   },
   "RoleMapping": {
     "dataSource": "userMongoDs",
-    "public": false
+    "public": true
   },
   "Role": {
     "dataSource": "userMongoDs",
-    "public": false
+    "public": true
   }
 }

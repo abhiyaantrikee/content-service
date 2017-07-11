@@ -54,8 +54,8 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/Document'
-        - name: accesstoken
-          in: header
+        - name: access_token
+          in: query
           description: access token
           required: true
           type: string

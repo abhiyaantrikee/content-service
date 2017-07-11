@@ -41,7 +41,7 @@ services:
     user: root
     build: ./content/.
     ports:
-      - "9001:9001"
+      - "9001"
     environment:
       - NODE_ENV=dev
       - DEBUG=content.js
@@ -57,10 +57,11 @@ services:
     user: root
     build: ./document/.
     ports:
-      - "9002:9002"
+      - "9002"
     environment:
       - NODE_ENV=dev
-      - DEBUG=document.js
+      - DEBUG=*
+      - NODE_TLS_REJECT_UNAUTHORIZED=0
     container_name: document-service
     volumes:
        - "./data:/home/document-service/data"
@@ -73,7 +74,7 @@ services:
     user: root
     build: ./user/.
     ports:
-      - "9003:9003"
+      - "9003"
     environment:
       - NODE_ENV=dev
       - DEBUG=server.js
