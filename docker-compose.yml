@@ -41,9 +41,9 @@ services:
     user: root
     build: ./content/.
     ports:
-      - "9001"
+      - "9001:9001"
     environment:
-      - NODE_ENV=local
+      - NODE_ENV=dev
       - DEBUG=content.js
     container_name: content-service
     volumes:
@@ -53,20 +53,20 @@ services:
     command: ["npm", "start"]
  
  #DOCUMENT SERVICE  
-  #document:
-  #  user: root
-  #  build: ./document/.
-  #  ports:
-  #    - "9002:9002"
-  #  environment:
-  #    - NODE_ENV=dev
-  #    - DEBUG=document.js
-  #  container_name: document-service
-  #  volumes:
-  #     - "./data:/home/document-service/data"
+  document:
+    user: root
+    build: ./document/.
+    ports:
+      - "9002:9002"
+    environment:
+      - NODE_ENV=dev
+      - DEBUG=document.js
+    container_name: document-service
+    volumes:
+       - "./data:/home/document-service/data"
     #depends_on:
     #  - rabbitmq
-  #  command: ["npm", "start"]
+    command: ["npm", "start"]
 
 #USER SERVICE
   user:
@@ -75,7 +75,7 @@ services:
     ports:
       - "9003:9003"
     environment:
-      - NODE_ENV=local
+      - NODE_ENV=dev
       - DEBUG=server.js
     container_name: user-service
     volumes:

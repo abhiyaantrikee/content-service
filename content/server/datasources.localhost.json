@@ -1,13 +1,13 @@
 {
   "contentMongoDs": {
-    "host": "192.168.99.100",
+    "host": "localhost",
     "port": 27017,
     "database": "content-db",
     "name": "mongoDs",
     "connector": "mongodb"
   },
   "userMongoDs": {
-    "host": "192.168.99.100",
+    "host": "localhost",
     "port": 27017,
     "database": "user-db",
     "name": "mongoDs",
