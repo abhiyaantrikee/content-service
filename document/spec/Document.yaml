@@ -1,0 +1,77 @@
+################################################################################
+# Specification: Document Canonical Model
+# Project: document-service
+# Description: Swagger Specification for Documents Canonical Model
+# Version: 0.1.0
+################################################################################
+swagger: '2.0'
+
+# Document Model Meta information
+info:
+  title: Document Canonical Model Specification
+  description: |
+    ```
+      Current Status Baseline Version
+    ```
+    Canonical Model Specification for Document
+
+  version: "0.1.0"
+
+definitions:
+  Document:
+    description: Document Entity which contains the parameters for the document
+    type: object
+    properties:
+      version:
+        type: string
+        description: version of the document
+      feature:
+        type: string
+        description: feature of the content which is used to create container
+      name:
+        type: string
+        description: name of the document
+      document:
+        type: string
+        format: byte
+        description: binary content of the document
+
+paths:
+  /create:
+    post:
+      tags:
+        - Document
+      operationId: createDocument
+      description: |
+        Create document based on bytes recieved in payload.
+      consumes:
+        - application/json
+      parameters:
+        - name: content
+          in: body
+          description: |
+            the Content to be created.
+          required: true
+          schema:
+            $ref: '#/definitions/Document'
+        - name: access_token
+          in: query
+          description: access token
+          required: true
+          type: string
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: object
+            description: Document information.
+        400:
+          description: Validation Error
+          schema:
+            type: object
+            description: Error Object.
+        500:
+          description: Error Response
+          schema:
+            type: object
+            description: Error Object.

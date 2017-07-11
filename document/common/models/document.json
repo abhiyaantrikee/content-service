@@ -1,0 +1,62 @@
+{
+  "name": "Document",
+  "base": "Model",
+  "properties": {
+    "version":{
+      "type": "string",
+      "description": "version of the document"
+    },
+    "feature":{
+      "type": "string",
+      "description": "feature of the content which is used to create container"
+    },
+    "name": {
+      "type": "string",
+      "description": "name of the document"
+    },
+    "document": {
+      "type": "string",
+      "description": "binary content of the document",
+      "format": "byte"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+     {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "write",
+      "permission": "ALLOW",
+      "property": "upload"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "write",
+      "permission": "ALLOW",
+      "property": "createDocument"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "write",
+      "permission": "ALLOW",
+      "property": "download"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "read",
+      "permission": "ALLOW",
+      "property": "download"
+    }
+  ],
+  "methods": {}
+}

@@ -1,23 +1,28 @@
 {
   "User": {
-    "dataSource": "mongoDs"
+    "dataSource": "userMongoDs",
+    "public": false
   },
   "AccessToken": {
-    "dataSource": "mongoDs"
+    "dataSource": "userMongoDs",
+    "public": false
   },
   "ACL": {
-    "dataSource": "mongoDs"
+    "dataSource": "userMongoDs",
+    "public": false
   },
   "RoleMapping": {
-    "dataSource": "mongoDs"
+    "dataSource": "userMongoDs",
+    "public": false
   },
   "Role": {
-    "dataSource": "mongoDs"
+    "dataSource": "userMongoDs",
+    "public": false
   },
   "Content": {
-    "dataSource": "mongoDs"
+    "dataSource": "contentMongoDs"
   },
   "WorkFlow": {
-    "dataSource": "mongoDs"
+    "dataSource": "contentMongoDs"
   }
 }

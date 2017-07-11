@@ -22,9 +22,8 @@ info:
     ** Revision History **
     * 0.0.1, Initial Draft
   version: 0.0.1
-basePath: /api/v1
+basePath: /api
 schemes:
-  - http
   - https
 definitions:
   Content:
@@ -197,7 +196,7 @@ definitions:
         description: |
           Time when the state transition happened
 paths:
-  /:
+  /Contents:
     get:
       tags:
         - Content

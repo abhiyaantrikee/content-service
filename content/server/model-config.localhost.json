@@ -1,0 +1,30 @@
+{
+  "User": {
+    "dataSource": "userMongoDs",
+    "public": false
+  },
+  "AccessToken": {
+    "dataSource": "userMongoDs",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "userMongoDs",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "userMongoDs",
+    "public": false
+  },
+  "Role": {
+    "dataSource": "userMongoDs",
+    "public": false
+  },
+  "Content": {
+    "dataSource": "contentMongoDs",
+    "public": true
+  },
+  "WorkFlow": {
+    "dataSource": "contentMongoDs",
+    "public": true
+  }
+}

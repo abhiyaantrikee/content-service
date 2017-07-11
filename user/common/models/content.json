@@ -1,0 +1,157 @@
+{
+  "name": "Content",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "id": {
+      "type": "number",
+      "description": "Unique Id of the Content (equivalent to PRIMARY KEY)\n",
+      "format": "int64"
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the Content shown on the UI\n"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the Content to identify the Content\n"
+    },
+    "startDate": {
+      "type": "string",
+      "description": "Start date of content validity\n",
+      "format": "date-time",
+      "pattern": "\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}"
+    },
+    "endDate": {
+      "type": "string",
+      "description": "End date of content validity\n",
+      "format": "date-time",
+      "pattern": "\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}"
+    },
+    "feature": {
+      "type": "string",
+      "description": "Feature to which the content belongs to\n"
+    },
+    "format": {
+      "type": "string",
+      "description": "Format of the Content [IMAGE, VIDEO, TEXT,PDF]\n",
+      "enum": [
+        "IMAGE",
+        "VIDEO",
+        "TEXT",
+        "PDF"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "description": "Version of the Content\n"
+    },
+    "majorVersionFlag": {
+      "type": "boolean",
+      "description": "Specifies if the version being created is a major version\n"
+    },
+    "assetUrl": {
+      "type": "string",
+      "description": "URL of Content. For Image/PDF it could be File system path, For Video\nit could be File Path or WWW URL\n"
+    },
+    "text": {
+      "type": "string",
+      "description": "Text of the Content\n"
+    },
+    "status": {
+      "type": "string",
+      "description": "Specifies the approval status of the content\n",
+      "enum": [
+        "CREATED",
+        "SENTFORREVIEW",
+        "INREVIEW",
+        "APPROVED",
+        "REJECTED",
+        "PUBLISHED"
+      ]
+    },
+    "createdBy": {
+      "type": "string",
+      "description": "User who created the Content\n"
+    },
+    "createdDate": {
+      "type": "string",
+      "description": "Created date of the Content\n",
+      "format": "date-time",
+      "pattern": "\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}"
+    },
+    "updatedDate": {
+      "type": "string",
+      "description": "Updated date/published date of the Content\n",
+      "format": "date-time",
+      "pattern": "\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}"
+    },
+    "updatedBy": {
+      "type": "string",
+      "description": "User who updated the Content\n"
+    },
+    "locale": {
+      "type": "string",
+      "description": "locale of the Content\n"
+    },
+    "extendedData": {
+      "type": "object",
+      "description": "Extended Data to hold any format data associated to the Content\n"
+    },
+    "workflowList": {
+      "type": [
+        "WorkFlow"
+      ],
+      "description": "List containing information about diffrent workflow states content was passed through\n"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "read",
+      "permission": "ALLOW",
+      "property": "findAllContent"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "write",
+      "permission": "ALLOW",
+      "property": "findAllContent"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "write",
+      "permission": "ALLOW",
+      "property": "updateContent"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "write",
+      "permission": "ALLOW",
+      "property": "updateWorkflow"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "write",
+      "permission": "ALLOW",
+      "property": "createContent"
+    }
+  ],
+  "methods": {}
+}

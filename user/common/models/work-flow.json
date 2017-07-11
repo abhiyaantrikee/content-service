@@ -1,0 +1,36 @@
+{
+  "name": "WorkFlow",
+  "base": "Model",
+  "idInjection": true,
+  "properties": {
+    "userName": {
+      "type": "string",
+      "description": "Reviewer who initiated workflow transition\n"
+    },
+    "role": {
+      "type": "string",
+      "description": "Role of the reviewer who initiated workflow transiton\n"
+    },
+    "comment": {
+      "type": "string",
+      "description": "Comments by reviewer\n"
+    },
+    "date": {
+      "type": "string",
+      "description": "Time when the state transition happened\n",
+      "format": "date-time",
+      "pattern": "\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
+  "methods": {}
+}

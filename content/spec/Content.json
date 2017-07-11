@@ -7,8 +7,7 @@
   },
   "basePath": "/api/v1",
   "schemes": [
-    "http",
-    "https"
+    "http","https"
   ],
   "definitions": {
     "Content": {

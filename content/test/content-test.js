@@ -10,7 +10,6 @@ var authorization = require('./test-utils/authorization')
 
 describe('Content service test cases', function(){
 	before(function(done){
-		console.log('inside before hook...');
 		authorization.createUserAndMapping();
 		done();
 	});
