@@ -1,6 +1,8 @@
 version: '2'
 services:
-  MongoDB:
+ 
+  #MONGO DB
+  mongodb:
     user: root
     image: mongo:latest
     container_name: mongo_db
@@ -11,11 +13,35 @@ services:
       - "27017:27017"
     volumes:
       - ./data/db:/data/db:rw
-  content-service:
+    networks:
+          gateway:
+              aliases:
+                  - mongo
+  
+  microgateway:
+    user: root
+    build: ./microgateway/.
+    ports:
+      - "9000:9000"
+    environment:
+      - CONFIG_DIR=/home/microgateway-service/definitions
+      - PORT=9000
+      - NODE_ENV=production
+      - DEBUG=server.js
+      - TLS_SERVER_CONFIG=/home/microgateway-service/config/tlsconfig.json
+    container_name: gateway-service
+    volumes:
+       - "./data:/home/gateway-service/data"
+    depends_on:
+      - mongodb
+    command: ["npm", "start"]
+
+ #CONTENT SERVICE
+  content:
     user: root
     build: ./content/.
     ports:
-      - "9000:9000"
+      - "9001"
     environment:
       - NODE_ENV=dev
       - DEBUG=content.js
@@ -23,6 +49,43 @@ services:
     volumes:
        - "./data:/home/content-service/data"
     depends_on:
-      - MongoDB
+      - mongodb
+    command: ["npm", "start"]
+ 
+ #DOCUMENT SERVICE  
+  document:
+    user: root
+    build: ./document/.
+    ports:
+      - "9002"
+    environment:
+      - NODE_ENV=dev
+      - DEBUG=*
+      - NODE_TLS_REJECT_UNAUTHORIZED=0
+    container_name: document-service
+    volumes:
+       - "./data:/home/document-service/data"
+    #depends_on:
+    #  - rabbitmq
     command: ["npm", "start"]
 
+#USER SERVICE
+  user:
+    user: root
+    build: ./user/.
+    ports:
+      - "9003"
+    environment:
+      - NODE_ENV=dev
+      - DEBUG=server.js
+    container_name: user-service
+    volumes:
+       - "./data:/home/user-service/data"
+    depends_on:
+      - mongodb
+    command: ["npm", "start"]
+
+#NETWORKS  
+networks:
+  gateway:
+  

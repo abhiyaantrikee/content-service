@@ -15,7 +15,7 @@
   },
   "User": {
     "dataSource": "db",
-        "public": true
+        "public": false
   },
   "AccessToken": {
     "dataSource": "db",
@@ -27,14 +27,14 @@
   },
   "RoleMapping": {
     "dataSource": "db",
-    "public": true,
+    "public": false,
     "options": {
       "strictObjectIDCoercion": true
     }
   },
   "Role": {
     "dataSource": "db",
-    "public": true
+    "public": false
   },
   "Content": {
     "dataSource": "db",

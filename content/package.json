@@ -31,16 +31,16 @@
     "gulp": "^3.9.1",
     "gulp-istanbul": "^1.1.1",
     "gulp-mocha": "^3.0.1",
-    "gulp-nsp": "2.4.2",
-    "gulp-shrinkwrap": "2.0.3",
+    "gulp-nsp": "^2.4.2",
+    "gulp-shrinkwrap": "^2.0.3",
     "jsdoc": "^3.4.3",
     "nsp": "^2.1.0",
     "supertest": "^3.0.0"
   },
   "repository": {
-    "type": "",
-    "url": ""
+    "type": "GIT",
+    "url": "https://github.com/abhiyaantrikee/content-service"
   },
-  "license": "UNLICENSED",
-  "description": "test"
+  "license": "MIT License",
+  "description": "APIs for Content as a Service"
 }

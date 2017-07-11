@@ -21,7 +21,7 @@ app.start = function(cb) {
     };
     server = https.createServer(options, app);
   }else{
-    http.createServer(app);
+    server = http.createServer(app);
   }
  // start the web server
   server.listen(app.get('port'), function () {
@@ -45,4 +45,5 @@ boot(app, __dirname, function(err) {
   // start the server if `$ node server.js`
   if (require.main === module)
     app.start();
+    console.log('CONTENT SERVICE STARTED ********************* ');
 });

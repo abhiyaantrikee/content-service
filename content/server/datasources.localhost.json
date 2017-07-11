@@ -1,0 +1,16 @@
+{
+  "contentMongoDs": {
+    "host": "localhost",
+    "port": 27017,
+    "database": "content-db",
+    "name": "mongoDs",
+    "connector": "mongodb"
+  },
+  "userMongoDs": {
+    "host": "localhost",
+    "port": 27017,
+    "database": "user-db",
+    "name": "mongoDs",
+    "connector": "mongodb"
+  }
+}

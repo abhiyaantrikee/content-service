@@ -1,0 +1,32 @@
+{
+  "restApiRoot": "/api",
+  "host": "0.0.0.0",
+  "port": 9002,
+  "httpOnly": false,
+  "remoting": {
+    "context": false,
+    "rest": {
+      "handleErrors": false,
+      "normalizeHttpPath": false,
+      "xml": false
+    },
+    "json": {
+      "strict": false,
+      "limit": "100kb"
+    },
+    "urlencoded": {
+      "extended": true,
+      "limit": "100kb"
+    },
+    "cors": false
+  },
+  "legacyExplorer": false,
+  "logoutSessionsOnSensitiveChanges": true,
+  "sslConfig": {
+    "privateKey": "./ssl/server.key",
+    "certificate": "./ssl/server.crt"
+  },
+  "documentsConfig": {
+    "createUrl": "https://localhost:9002/api/Documents/"
+  }
+}

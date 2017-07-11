@@ -1,0 +1,121 @@
+paths:
+  '/Documents/{container}/upload':
+    post:
+      tags:
+        - Document
+      operationId: Document.upload
+      parameters: []
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: object
+            properties:
+              result:
+                type: object
+      deprecated: false
+  '/Documents/{container}/download/{file}':
+    get:
+      tags:
+        - Document
+      operationId: Document.download
+      parameters:
+        - name: container
+          in: path
+          required: false
+          type: string
+        - name: file
+          in: path
+          required: false
+          type: string
+      responses:
+        '204':
+          description: Request was successful
+      deprecated: false
+  '/Documents/create':
+    post:
+      tags:
+        - Document
+      summary: |
+        Create document based on bytes recieved in payload.
+      operationId: Document.createDocument
+      parameters:
+        - name: document
+          in: body
+          description: |
+            the Content to be created.
+          required: true
+          schema:
+            description: |
+              the Content to be created.
+            $ref: '#/definitions/Document'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            description: Successful Response
+            type: object
+      deprecated: false
+definitions:
+  x-any:
+    properties: {}
+  Document:
+    properties:
+      version:
+        description: version of the document
+        type: string
+      feature:
+        description: feature of the content which is used to create container
+        type: string
+      name:
+        description: name of the document
+        type: string
+      document:
+        format: byte
+        description: binary content of the document
+        type: string
+      id:
+        type: number
+        format: double
+    additionalProperties: false
+basePath: /api
+swagger: '2.0'
+info:
+  x-ibm-name: document-service
+  version: 1.0.0
+  title: document-service
+schemes:
+  - https
+host: $(catalog.host)
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+  clientSecretHeader:
+    in: header
+    name: X-IBM-Client-Secret
+    type: apiKey
+security:
+  - clientIdHeader: []
+    clientSecretHeader: []
+x-ibm-configuration:
+  testable: true
+  enforced: true
+  cors:
+    enabled: true
+  catalogs:
+    apic-dev:
+      properties:
+        runtime-url: $(TARGET_URL)
+    sb:
+      properties:
+        runtime-url: 'http://localhost:4001'
+  assembly:
+    execute:
+      - invoke:
+          target-url: $(runtime-url)$(request.path)$(request.search)

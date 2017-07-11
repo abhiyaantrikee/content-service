@@ -1,0 +1,25 @@
+product: '1.0.0'
+
+info:
+  name: document-service
+  title: document-service
+  version: '1.0.0'
+
+apis:
+  'document-service':
+    $ref: document-service.yaml
+
+visibility:
+  view:
+    type: public
+  subscribe:
+    type: authenticated
+
+plans:
+  default:
+    title: Default Plan
+    description: Default Plan
+    approval: false
+    rate-limit:
+      value: 100/hour
+      hard-limit: false

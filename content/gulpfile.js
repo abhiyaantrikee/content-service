@@ -28,10 +28,10 @@ gulp.task('mochaTest', function (cb) {
     .on('finish', function () {
 
       process.env.NODE_ENV = 'unittest';
+  
       var app = require('./server/server');
       var instance = app.start(function(err,serverInstance){
         if(err) {
-          console.log(err);
           return cb();
         }
         gulp.src(['test/*.js'])

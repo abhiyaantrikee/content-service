@@ -1,0 +1,15 @@
+{
+  "userMongoDs": {
+    "host": "localhost",
+    "port": 27017,
+    "database": "user-db",
+    "name": "mongoDs",
+    "connector": "mongodb"
+  },
+  "storage": {
+    "name": "storage",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root":"./storage"
+  }
+}
